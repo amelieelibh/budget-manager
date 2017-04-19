@@ -1,0 +1,15 @@
+
+<!--<link rel="stylesheet" href="styles.css"> -->
+<h2 style="color: darkslategrey">Folio: {{folio.folio}} - {{folio.nombreProyecto}}</h2>
+<h3 style="color: darkslategrey">Responsable: {{folio.nombreResponsable}}</h3>
+<h4 style="color: darkslategrey">Id Responsable: {{folio.idResponsable}}</h4>
+<br>
+<div>
+    <h4>Lista de Gastos</h4>
+    <div id="budget"></div>
+</div>
+<br>
+
+<button class="btn btn-primary pull-right but-distance" (click)="saveChanges()">Guardar</button>
+<button class="btn btn-info pull-right but-distance" style="color:black" (click)="addBill()">Agregar Gasto</button>
+<button class="btn btn-success but-distance" (click)="goBack()">Hecho</button>

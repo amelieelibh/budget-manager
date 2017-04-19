@@ -1,0 +1,12 @@
+<h2>Bienvenido {{userid}}</h2>
+<h3>Folios Asignados</h3>
+<ul class="items">
+  <li *ngFor="let folio of folios"
+    [class.selected]="folio === selectedFolio"
+    (click)="onSelect(folio)">
+    <span class="badge">{{folio.folio}}</span> <span> {{folio.nombreProyecto}} </span>
+  </li>
+</ul>
+<button class="btn btn-primary pull-right" (click)="addFolio()">Asignar Folio</button>
+<button class="btn btn-inverse" (click)="goBack()">Back</button>
+

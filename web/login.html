@@ -1,0 +1,18 @@
+<h1>Inicio de sesi&oacute;n</h1>
+
+<form id="login-form" action="#">
+    <div class="form-group">
+        <label for="id">Usuario:</label>
+        <input id="id" type="text" class="form-control" required
+            [(ngModel)]="user.id" placeholder="usuario" />
+        <br/>
+        <br/>
+        <label for="pass">Contraseña:</label>
+        <input id="pass" type="password" class="form-control" required
+            [(ngModel)]="user.pass" placeholder="contraseña" />
+        <br/>
+        <div id="errmsg" style="visibility: hidden; color:crimson;"><label>{{err}}</label></div>
+        <button class="btn btn-primary pull-right" (click)="login()">Entrar</button>
+        <br/>
+    </div>
+</form>
