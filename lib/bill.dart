@@ -7,5 +7,5 @@ class Bill{
   String empName;
 
 Bill(this.contableAccount, this.rfc, [this.desc = "",
-        this.cfdi = "", this.employees=const {'id':'', 'name':''}]);
+        this.cfdi = "", this.employees=const {'id':'name'}]);
 }

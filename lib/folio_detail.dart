@@ -178,15 +178,16 @@ class FolioDetailComponent implements OnInit{
       
 
       Element detailsElem = new Element.ul();
-      for(var item in b.employees){
+      for(String key in b.employees.keys){
         Element rowDet = new Element.li();
+        rowDet.appendHtml('<span class="badge">' + key + '</span> <span> ' + b.employees[key] + ' </span>');
         detailsElem.children.add(rowDet);
       }
 
       var cellDetails = newDetails.addCell();
       cellDetails
         ..children.add(detailsElem)
-        ..colSpan=6
+        ..colSpan=7
       ;
       
     }
