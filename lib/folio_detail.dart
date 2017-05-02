@@ -11,6 +11,7 @@ import 'constants.dart';
 import 'user.dart';
 import 'folio.dart';
 import 'package:modal_dialog/core.dart';
+import 'package:observable/observable.dart';
 
 @Component(
   selector: "manager-view",
@@ -23,21 +24,23 @@ class FolioDetailComponent implements OnInit{
   final Router _router;
   final RouteParams _routeParams;
   final BillsService _billsService;
+  final ApplicationRef _appRef;
 
-  FolioDetailComponent(this._router, this._routeParams, this._billsService);
+  FolioDetailComponent(this._router, this._routeParams, this._billsService, this._appRef);
   
   Folio folio = new Folio("", "", "", "");
-  List<Bill> bills = [];
+  ObservableList<Bill> bills = toObservable(new List());
   User user;
   
 
   void updateTableView(String i, bool isEditable){
     var editable = isEditable ? "true" : "false";
     querySelector("#"+BudgetConstants.divAcc+i).setAttribute(BudgetConstants.EDITABLE_ATTR, editable);
+    querySelector("#"+BudgetConstants.divMount+i).setAttribute(BudgetConstants.EDITABLE_ATTR, editable);
     querySelector("#"+BudgetConstants.divCfdi+i).setAttribute(BudgetConstants.EDITABLE_ATTR, editable);
     querySelector("#"+BudgetConstants.divDesc+i).setAttribute(BudgetConstants.EDITABLE_ATTR, editable);
     //querySelector("#"+BudgetConstants.divEid+i).setAttribute(BudgetConstants.EDITABLE_ATTR, editable);
-    //uerySelector("#"+BudgetConstants.divEname+i).setAttribute(BudgetConstants.EDITABLE_ATTR, editable);
+    //querySelector("#"+BudgetConstants.divEname+i).setAttribute(BudgetConstants.EDITABLE_ATTR, editable);
     querySelector("#"+BudgetConstants.divRfc+i).setAttribute(BudgetConstants.EDITABLE_ATTR, editable);
     
     querySelector("#"+BudgetConstants.butEdit+i).style.visibility=isEditable ? "hidden" : "";
@@ -78,11 +81,10 @@ class FolioDetailComponent implements OnInit{
   }
 
   Future<Null> ngOnInit() async {
-    folio = _routeParams.get('folio');
-    
+    folio = globals.folio;//_routeParams.get('folio');
     user = globals.user;
-    bills = await _billsService.getBills(folio);
-
+    var b = await _billsService.getBills(folio.folio);
+    bills.addAll(b);
     TableElement table = new TableElement();
     table.classes..add("pure-table")..add("pure-table-horizontal");
 
@@ -90,6 +92,7 @@ class FolioDetailComponent implements OnInit{
       ..add(new Element.th()..text = "")
       ..add(new Element.th()..text = "#")
       ..add(new Element.th()..text = "Cta Contable")
+      ..add(new Element.th()..text = "Monto")
       ..add(new Element.th()..text = "RFC proveedor")
       ..add(new Element.th()..text = "CFDI")
       ..add(new Element.th()..text = "Descripción")
@@ -109,6 +112,8 @@ class FolioDetailComponent implements OnInit{
       DivElement index = new DivElement()..setAttribute(BudgetConstants.EDITABLE_ATTR, isEditable)..text = i.toString();
       DivElement acc = new DivElement()..setAttribute(BudgetConstants.EDITABLE_ATTR, isEditable)
         ..setAttribute("id",BudgetConstants.divAcc+i.toString())..text = b.contableAccount;
+      DivElement mount = new DivElement()..setAttribute(BudgetConstants.EDITABLE_ATTR, isEditable)
+        ..setAttribute("id",BudgetConstants.divMount+i.toString())..text = b.mount.toStringAsFixed(2);
       DivElement rfc = new DivElement()..setAttribute(BudgetConstants.EDITABLE_ATTR, isEditable)
         ..setAttribute("id",BudgetConstants.divRfc+i.toString())..text = b.rfc;
       
@@ -163,6 +168,7 @@ class FolioDetailComponent implements OnInit{
       ..addCell().children.addAll([butEdit, butOkEdit])
       ..addCell().children.add(index)
       ..addCell().children.add(acc)
+      ..addCell().children.add(mount)
       ..addCell().children.add(rfc)
       ..addCell().children.add(cfdi)
       ..addCell().children.add(desc)
@@ -196,10 +202,14 @@ class FolioDetailComponent implements OnInit{
     dvBudget.children.add(table);
   }
 
-  Future goBack() => _router.navigate([
+  Future goBack() { 
+    globals.folio = Folio.EMPTY();
+    _router.navigate([
         'Manager', 
         {'userid':user.id, 'role':user.role}
-      ]);
+      ]
+    );
+  }
 
   Future<bool> saveChanges() async {
      List<Bill> modified = [];
@@ -211,15 +221,14 @@ class FolioDetailComponent implements OnInit{
           accept: (ModalDialog dialog) {
             ModalAlert modalAlert = new ModalAlert("Guardado Exitoso",
              'Su información se ha guardado', acceptLabel: "Aceptar")
-              ..modal.element.style.left = "auto" 
-              ..modal.element.style.top = "auto" 
+              ..modal.element.style.left = "50%" 
+              ..modal.element.style.top = "50%" 
               ..open();
             dialog.close();
         });
       dialog
-      ..modal.element.style.left = "auto" 
-      ..modal.element.style.top = "auto" 
-      ..modal.element.style.bottom = "auto"
+      ..modal.element.style.left = "50%" 
+      ..modal.element.style.top = "50%" 
       ..open();
      }else{
        window.console.log("not saved");
@@ -229,14 +238,169 @@ class FolioDetailComponent implements OnInit{
 
   Future uploadFiles(Event event){
     var mm = new ModalMessage("Carga de Archivos", "Archivos Cargados")
-      ..modal.element.style.left = "auto"
-      ..modal.element.style.top = "auto"
-      ..modal.element.style.bottom = "auto"
+      ..modal.element.style.left = "50%"
+      ..modal.element.style.top = "50%"
       ..open();
     new Future.delayed(const Duration(milliseconds: 1500), ()=> mm.close());
   }
 
-  Future addBill(){
-
+  Future addBill(String contableAccount, num mount, String rfc,
+        String desc, String cfdi, Map<String, String> employees){
+    var b = new Bill(contableAccount, mount, rfc, desc: desc, 
+        cfdi: cfdi, employees: employees);
+    bills.add(b);
+    addRowBill(null, null, false, b);
+    _appRef.tick();
+    window.console.debug(bills.toString());
   }
+  Future createBill(){
+    String htmlContent = """
+      <form id="new-bill-form" action="#" class="form-horizontal">
+        <div class="form-group">
+          <label class="control-label" style="width=25%" for="inCta">Cuenta Contable:</label>
+          <input id="inCta" style="width:50%;" type="text" class="form-control" required
+              placeholder="Cuenta Contable del Gasto" />
+        </div>
+        <div class="form-group">
+          <label class="control-label" style="width=25%" for="inMount">Monto:</label>
+          <input id="inMount" style="width:50%;" type="number" class="form-control" required
+              placeholder="Cantidad del Gasto" />
+        </div>
+        <div class="form-group">
+          <label class="control-label" style="width=25%" for="inRfc">RFC:</label>
+          <input id="inRfc" style="width:50%;" type="text" class="form-control" required
+              placeholder="RFC del Proveedor" />
+        </div>
+        <div class="form-group">
+          <label class="control-label" style="width=25%" for="inDesc">Descripción:</label>
+          <input id="inDesc" style="width:50%;" type="text" class="form-control" required
+              placeholder="Detalle del Gasto" />
+        </div>
+          <hr>
+        <div class="form-group" style="margin: 5%;">
+          <input type="checkbox" name="requireEmpList" value="reqEmpList"
+             data-toggle="collapse" data-target="#listaEmpleados"> designar gastos a empleados<br>
+          <div id="listaEmpleados" class="collapse">
+            <label for="inEmpListId">ID:</label>
+            <input id="inEmpListId" type="text" class="form-control" required
+                placeholder="ID del Empleado" />
+            <label for="inEmpListName">Nombre:</label>
+            <input id="inEmpListName" type="text" class="form-control" required
+                placeholder="Nombre del Empleado" />
+          </div>
+        </div>
+      </form>
+      """;
+    new ModalConfirm("Agregar Nuevo Gasto", htmlContent,
+      html: true, acceptLabel: "Agregar", cancelLabel: "Cancelar", accept: (ModalDialog modal){
+        String cta = (querySelector("#inCta") as InputElement).value;
+        num mount = num.parse((querySelector("#inMount") as InputElement).value);
+        String rfc = (querySelector("#inRfc") as InputElement).value;
+        String desc = (querySelector("#inDesc") as InputElement).value;
+        addBill(cta, mount, rfc, desc, "", {});
+        modal.close();
+      })
+      ..modal.element.style.left = "50%"
+      ..modal.element.style.top = "inherit"
+      ..modal.element.style.width = "600px"
+      ..modal.element.style.display = "inline-table"
+      ..open();
+      querySelector(".modal-dialog").style.margin = "auto";
+  }
+
+  void addRowBill(TableSectionElement tBody, String i, bool editable, Bill b){
+      if(tBody == null){
+        tBody = querySelector("tbody") as TableSectionElement;
+      }
+      if(i == null){
+        var index = tBody.children.length;
+        i = ((index ~/ 2) + 1).toString();
+      }
+      String isEditable = editable.toString();
+      var newLine = tBody.addRow()..id = "row"+i;
+
+      DivElement index = new DivElement()..setAttribute(BudgetConstants.EDITABLE_ATTR, isEditable)..text = i;
+      DivElement acc = new DivElement()..setAttribute(BudgetConstants.EDITABLE_ATTR, isEditable)
+        ..setAttribute("id",BudgetConstants.divAcc+i.toString())..text = b.contableAccount;
+      DivElement mount = new DivElement()..setAttribute(BudgetConstants.EDITABLE_ATTR, isEditable)
+        ..setAttribute("id",BudgetConstants.divMount+i.toString())..text = b.mount.toStringAsFixed(2);
+      DivElement rfc = new DivElement()..setAttribute(BudgetConstants.EDITABLE_ATTR, isEditable)
+        ..setAttribute("id",BudgetConstants.divRfc+i.toString())..text = b.rfc;
+      
+      DivElement cfdi = new DivElement()..setAttribute(BudgetConstants.EDITABLE_ATTR, isEditable)
+        ..setAttribute("id",BudgetConstants.divCfdi+i.toString());
+      DivElement desc = new DivElement()..setAttribute(BudgetConstants.EDITABLE_ATTR, isEditable)
+        ..setAttribute("id",BudgetConstants.divDesc+i.toString())..text = b.desc;
+      
+      var butEdit = new SpanElement()..classes.addAll(["glyphicon","glyphicon-pencil"])
+        ..setAttribute("id", BudgetConstants.butEdit+i.toString())
+        ..setAttribute("name", i.toString())
+        ..style.visibility=""
+        ..onClick.listen((MouseEvent event) => onEditRow(event));
+      var butOkEdit = new SpanElement()..classes.addAll(["glyphicon","glyphicon-ok"])
+        ..setAttribute("id", BudgetConstants.butEditOk+i.toString())
+        ..setAttribute("name", i.toString())..style.visibility="hidden"
+        ..onClick.listen((MouseEvent event) => onEditOkRow(event));
+      var butDetail = new SpanElement()..classes.addAll(["glyphicon","glyphicon-zoom-in"])
+        ..setAttribute("id", BudgetConstants.butDetail+i.toString())
+        ..setAttribute("name", i.toString())
+        ..setAttribute("data-toggle", "collapse")
+        ..setAttribute("data-target", "#details"+i.toString())
+        ..onClick.listen((MouseEvent event) => onShowDetail(event));
+      
+
+      var butUploadCfdi = new LabelElement()
+        ..htmlFor = "upload"+i.toString()
+        ..children.addAll([
+          new SpanElement()..classes.addAll(["glyphicon","glyphicon-upload"])
+            ..setAttribute("id", BudgetConstants.butUploadCfdi+i.toString())
+            ..setAttribute("name", i.toString())
+            ..onClick.listen((MouseEvent event) => uploadCfdi(event))
+          , new InputElement()..type = "file"
+            ..id = "upload" + i.toString()
+            ..name = "files[]" ..style.display = "none"
+            ..onChange.listen((event)=> uploadFiles(event))
+        ]);
+      var butDownloadCfdi = new AnchorElement()..href = b.cfdi
+        ..children.add(
+          new SpanElement()..classes.addAll(["glyphicon","glyphicon-download-alt"])
+            ..setAttribute("id", BudgetConstants.butDownloadCfdi+i.toString())
+            ..setAttribute("name", i.toString())..style.visibility=(b.cfdi != null && !b.cfdi.isEmpty ? "" : "hidden")
+        )..target = "_blank";
+      cfdi.children.addAll([butUploadCfdi, butDownloadCfdi]);
+      
+
+      newLine
+      ..addCell().children.addAll([butEdit, butOkEdit])
+      ..addCell().children.add(index)
+      ..addCell().children.add(acc)
+      ..addCell().children.add(mount)
+      ..addCell().children.add(rfc)
+      ..addCell().children.add(cfdi)
+      ..addCell().children.add(desc)
+      //newLine.addCell().children.add(empId);
+      //newLine.addCell().children.add(empName);
+      ..addCell().children.add(butDetail)
+      ;
+      butDetail.parent.style.textAlign="center";
+
+      var newDetails = tBody.addRow()
+        ..id = "details"+i.toString()
+        ..classes.add("collapse");
+      
+
+      Element detailsElem = new Element.ul();
+      for(String key in b.employees.keys){
+        Element rowDet = new Element.li();
+        rowDet.appendHtml('<span class="badge">' + key + '</span> <span> ' + b.employees[key] + ' </span>');
+        detailsElem.children.add(rowDet);
+      }
+
+      var cellDetails = newDetails.addCell();
+      cellDetails
+        ..children.add(detailsElem)
+        ..colSpan=7
+      ;
+      
+    }
 }

@@ -6,6 +6,7 @@ class BudgetConstants{
   static final String butDownloadCfdi = "butDldCfdi";
 
   static final String divAcc = "divAcc";
+  static final String divMount = "divMount";
   static final String divRfc = "divRfc";
   static final String divCfdi = "divCfdi";
   static final String divDesc = "divDesc";
