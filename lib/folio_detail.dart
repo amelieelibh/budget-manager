@@ -257,36 +257,40 @@ class FolioDetailComponent implements OnInit{
     String htmlContent = """
       <form id="new-bill-form" action="#" class="form-horizontal">
         <div class="form-group">
-          <label class="control-label" style="width=25%" for="inCta">Cuenta Contable:</label>
-          <input id="inCta" style="width:50%;" type="text" class="form-control" required
+          <label class="control-label" for="inCta">Cuenta Contable:</label>
+          <input id="inCta" type="text" class="form-control" required
               placeholder="Cuenta Contable del Gasto" />
         </div>
         <div class="form-group">
-          <label class="control-label" style="width=25%" for="inMount">Monto:</label>
-          <input id="inMount" style="width:50%;" type="number" class="form-control" required
+          <label class="control-label" for="inMount">Monto:</label>
+          <input id="inMount" type="number" class="form-control" required
               placeholder="Cantidad del Gasto" />
         </div>
         <div class="form-group">
-          <label class="control-label" style="width=25%" for="inRfc">RFC:</label>
-          <input id="inRfc" style="width:50%;" type="text" class="form-control" required
+          <label class="control-label" for="inRfc">RFC:</label>
+          <input id="inRfc" type="text" class="form-control" required
               placeholder="RFC del Proveedor" />
         </div>
         <div class="form-group">
-          <label class="control-label" style="width=25%" for="inDesc">Descripción:</label>
-          <input id="inDesc" style="width:50%;" type="text" class="form-control" required
+          <label class="control-label" for="inDesc">Descripción:</label>
+          <input id="inDesc" type="text" class="form-control" required
               placeholder="Detalle del Gasto" />
         </div>
           <hr>
-        <div class="form-group" style="margin: 5%;">
+        <div style="margin: 5%;">
           <input type="checkbox" name="requireEmpList" value="reqEmpList"
              data-toggle="collapse" data-target="#listaEmpleados"> designar gastos a empleados<br>
           <div id="listaEmpleados" class="collapse">
-            <label for="inEmpListId">ID:</label>
-            <input id="inEmpListId" type="text" class="form-control" required
-                placeholder="ID del Empleado" />
-            <label for="inEmpListName">Nombre:</label>
-            <input id="inEmpListName" type="text" class="form-control" required
-                placeholder="Nombre del Empleado" />
+            <div class="form-group">
+              <label class="control-label" for="inEmpListId">ID:</label>
+              <input id="inEmpListId" type="text" class="form-control" required
+                  placeholder="ID del Empleado" />
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="inEmpListName">Nombre:</label>
+              <input id="inEmpListName" type="text" class="form-control" required
+                  placeholder="Nombre del Empleado" />
+            </div>
           </div>
         </div>
       </form>
@@ -300,7 +304,8 @@ class FolioDetailComponent implements OnInit{
         addBill(cta, mount, rfc, desc, "", {});
         modal.close();
       })
-      ..open();
+      ..open()
+      ..modal.element.classes.add("budget-modal");
       querySelector(".modal-dialog").style.margin = "auto";
   }
 

@@ -69,29 +69,29 @@ class ManagerComponent implements OnInit{
       <h3>Completa la información del nuevo folio</h3>
       <form id="new-folio-form" action="#" class="form-horizontal">
         <div class="form-group">
-          <label class="control-label" for="inFolio" style="width:25%;">Folio:</label>
-          <input id="inFolio" style="width:60%;"
+          <label class="control-label" for="inFolio">Folio:</label>
+          <input id="inFolio"
               type="text" class="form-control" required
               placeholder="Folio del proyecto" />
         </div>
         <div class="form-group">
-          <label class="control-label" for="inNombreProyecto" style="width:25%;">Proyecto:</label>
-          <input id="inNombreProyecto" style="width:60%;"
+          <label class="control-label" for="inNombreProyecto">Proyecto:</label>
+          <input id="inNombreProyecto"
               type="text" class="form-control" required
               placeholder="Nombre del proyecto" />
           <br/>
         </div>
       </form>
       """;
-    new ModalConfirm("Nuevo Folio", htmlContent,
+    var modal = new ModalConfirm("Nuevo Folio", htmlContent,
       html: true, acceptLabel: "Agregar", cancelLabel: "Cancelar", accept: (ModalDialog modal){
         String folio = (querySelector("#inFolio") as InputElement).value;
         String proy = (querySelector("#inNombreProyecto") as InputElement).value;
         addFolio(folio, proy, idEmp, nomEmp);
         modal.close();
       })
-      ..modal.element.classes.add("budget-modal")
       ..open();
+      modal.modal.element.classes.add("budget-modal");
       querySelector(".modal-dialog").style.margin = "auto";
   }
 
