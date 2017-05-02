@@ -300,10 +300,6 @@ class FolioDetailComponent implements OnInit{
         addBill(cta, mount, rfc, desc, "", {});
         modal.close();
       })
-      ..modal.element.style.left = "50%"
-      ..modal.element.style.top = "inherit"
-      ..modal.element.style.width = "600px"
-      ..modal.element.style.display = "inline-table"
       ..open();
       querySelector(".modal-dialog").style.margin = "auto";
   }

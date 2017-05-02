@@ -89,16 +89,8 @@ class ManagerComponent implements OnInit{
         String proy = (querySelector("#inNombreProyecto") as InputElement).value;
         addFolio(folio, proy, idEmp, nomEmp);
         modal.close();
-      })/*
-      ..modal.element.style.left = "50%"
-      ..modal.element.style.top = "auto"
-      ..modal.element.style.bottom = "auto"
-      ..modal.element.style.width = "600px"
-      ..modal.element.style.display = "inline-table"*/
-      ..modal.element.style.left = "50%"
-      ..modal.element.style.top = "inherit"
-      ..modal.element.style.width = "600px"
-      ..modal.element.style.display = "inline-table"
+      })
+      ..modal.element.classes.add("budget-modal")
       ..open();
       querySelector(".modal-dialog").style.margin = "auto";
   }
