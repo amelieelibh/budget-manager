@@ -123,6 +123,14 @@ nav a.active {
   margin-right: 10px;
 }
 
+.budget-modal{
+  left: 50%;
+  top: inherit;
+  width: 600px;
+  display: inline-table;
+}
+
+
 
 
 /*!
