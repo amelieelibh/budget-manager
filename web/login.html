@@ -1,18 +1,38 @@
-<h1>Inicio de sesi&oacute;n</h1>
-
-<form id="login-form" action="#">
-    <div class="form-group">
-        <label for="id">Usuario:</label>
-        <input id="id" type="text" class="form-control" required
-            [(ngModel)]="user.id" placeholder="usuario" />
-        <br/>
-        <br/>
-        <label for="pass">Contraseña:</label>
-        <input id="pass" type="password" class="form-control" required
-            [(ngModel)]="user.pass" placeholder="contraseña" />
-        <br/>
-        <div id="errmsg" style="visibility: hidden; color:crimson;"><label>{{err}}</label></div>
-        <button class="btn btn-primary pull-right" (click)="login()">Entrar</button>
-        <br/>
+<div class="container">
+    <h1>Inicio de sesi&oacute;n</h1>
+    <div class="main-login main-center">
+        <form id="login-form" action="#" method="post" class="form-horizontal">
+            <div class="form-group">
+                <div class="form-group">
+                    <label for="id" class="cols-sm-2 control-label">Usuario:</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                            <input id="id" type="text" class="form-control" required
+                                [(ngModel)]="user.id" placeholder="usuario" />
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <br/>
+                <div class="form-group">
+                    <label for="pass" class="cols-sm-2 control-label">Contraseña:</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                            <input id="pass" type="password" class="form-control" required
+                                [(ngModel)]="user.pass" placeholder="contraseña" />
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div id="errmsg" style="visibility: hidden; color:crimson;"><label>{{err}}</label></div>
+                <div class="form-group ">
+                    <!-- <button class="btn btn-primary pull-right" (click)="login()">Entrar</button> -->
+                    <button class="btn btn-primary btn-lg btn-block login-button" (click)="login()">Entrar</button>
+                </div>
+                <br/>
+            </div>
+        </form>
     </div>
-</form>
+</div>
