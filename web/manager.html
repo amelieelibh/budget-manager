@@ -1,13 +1,30 @@
 <div class="main-login main-center">
  <h2>Bienvenido {{user.name}}</h2>
  <h3>Folios Asignados</h3>
- <ul class="items">
-  <li *ngFor="let folio of folios"
+ <table>
+  <thead>
+   <tr>
+    <th>Comprobado</th>
+    <th>Folio</th>
+    <th>#CC</th>
+    <th>Centro de Costos</th>
+    <th>Descripci&oacute;n</th>
+    <th>Monto</th>
+   </tr>
+  </thead>
+  <tbody>
+   <tr *ngFor="let folio of folios" 
    [class.selected]="folio === selectedFolio"
    (click)="onSelect(folio)">
-  <span class="badge">{{folio.folio}}</span> <span> {{folio.nombreProyecto}} </span>
- </li>
- </ul>
+    <th>{{folio.check}}</th>
+    <th>{{folio.folio}}</th>
+    <th>{{folio.cc}}</th>
+    <th>{{folio.centroCostos}}</th>
+    <th>{{folio.desscripcion}}</th>
+    <th>{{folio.monto}}</th>
+   </tr>
+  </tbody>
+ </table>
  <button class="btn btn-primary pull-right" (click)="createFolio()">Asignar Folio</button>
  <button class="btn btn-inverse" (click)="goBack()">Back</button>
 </div>
