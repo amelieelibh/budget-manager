@@ -6,16 +6,16 @@ import 'dart:async';
 @Injectable()
 class LoginService {
   final List<User> users = [
-    new User("admin1", "pass", "admin"),
-    new User("jefe", "pass", "admin"),
-    new User("man1", "pass", "man"),
-    new User("contador", "pass", "man"),
-    new User("Pedro", "pass", "x"),
-    new User("Juan", "pass", "x"),
-    new User("Ana", "pass", "x"),
-    new User("Jaime", "pass", "x"),
-    new User("Elissa", "pass", "x"),
-    new User("Amelie", "pass", "x")
+    new User(id : "admin1",   pass : "pass", role : "admin",  name : "Juan Perez", idEmp : "A0001"),
+    new User(id : "man1",     pass : "pass", role : "man",    name : "Gloria Tellez", idEmp : "Z0001"),
+    new User(id : "betos",    pass : "pass", role : "x",      name : "Alberto Solis"),
+    new User(id : "anapaz",   pass : "pass", role : "x",      name : "Ana Paz"),
+    new User(id : "Pedro",    pass : "pass", role : "x",      name : "Pedro Chong"),
+    new User(id : "lalo",     pass : "pass", role : "x",      name : "Eduardo Molina"),
+    new User(id : "sofias",   pass : "pass", role : "x",      name : "Sofia Suarez"),
+    new User(id : "charly",   pass : "pass", role : "x",      name : "Carlos Fuentes"),
+    new User(id : "kcruz",    pass : "pass", role : "x",      name : "Karla Cruz"),
+    new User(id : "hruiz",    pass : "pass", role : "x",      name : "Héctor Ruiz")
   ];
 
   Future<User> login(User user) async{

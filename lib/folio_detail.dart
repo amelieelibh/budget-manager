@@ -28,10 +28,9 @@ class FolioDetailComponent implements OnInit{
 
   FolioDetailComponent(this._router, this._routeParams, this._billsService, this._appRef);
   
-  Folio folio = new Folio("", "", "", "");
+  Folio folio = new Folio("", "", "");
   ObservableList<Bill> bills = toObservable(new List());
-  User user;
-  
+  User user = new User();
 
   void updateTableView(String i, bool isEditable){
     var editable = isEditable ? "true" : "false";
@@ -81,7 +80,7 @@ class FolioDetailComponent implements OnInit{
   }
 
   Future<Null> ngOnInit() async {
-    folio = globals.folio;//_routeParams.get('folio');
+    folio = globals.folio;
     user = globals.user;
     var b = await _billsService.getBills(folio.folio);
     bills.addAll(b);
@@ -205,8 +204,7 @@ class FolioDetailComponent implements OnInit{
   Future goBack() { 
     globals.folio = Folio.EMPTY();
     _router.navigate([
-        'Manager', 
-        {'userid':user.id, 'role':user.role}
+        'Manager'
       ]
     );
   }
@@ -264,7 +262,7 @@ class FolioDetailComponent implements OnInit{
         <div class="form-group">
           <label class="control-label" for="inMount">Monto:</label>
           <input id="inMount" type="number" class="form-control" required
-              placeholder="Cantidad del Gasto" />
+              placeholder="Cantidad del Gasto" step="0.01" />
         </div>
         <div class="form-group">
           <label class="control-label" for="inRfc">RFC:</label>
@@ -281,16 +279,31 @@ class FolioDetailComponent implements OnInit{
           <input type="checkbox" name="requireEmpList" value="reqEmpList"
              data-toggle="collapse" data-target="#listaEmpleados"> designar gastos a empleados<br>
           <div id="listaEmpleados" class="collapse">
-            <div class="form-group">
-              <label class="control-label" for="inEmpListId">ID:</label>
-              <input id="inEmpListId" type="text" class="form-control" required
-                  placeholder="ID del Empleado" />
-            </div>
-            <div class="form-group">
-              <label class="control-label" for="inEmpListName">Nombre:</label>
-              <input id="inEmpListName" type="text" class="form-control" required
-                  placeholder="Nombre del Empleado" />
-            </div>
+            <table id="tblForEmployees">
+              <thead>
+                <tr>
+                  <th>ID del Empleado</th>
+                  <th>Nombre</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th contenteditable>-</th>
+                  <th contenteditable>-</th>
+                </tr>
+              </tbody>
+            </table>
+            <script>
+              function addEmployeeRow(){
+                var table = document.getElementById("tblForEmployees");
+                var row = table.insertRow(-1);
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                cell1.innerHTML = "-";
+                cell2.innerHTML = "-";
+              }
+            </script>
+            <button class="btn btn-warning btn-block pull-right" onclick="addEmployeeRow()">Agregar Empleado</button>
           </div>
         </div>
       </form>

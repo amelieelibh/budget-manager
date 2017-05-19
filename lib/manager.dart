@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:angular2/core.dart';
 import 'package:angular2/router.dart';
 
+import 'user.dart';
 import 'globals.dart' as globals;
 import 'folios_service.dart';
 import 'folio.dart';
@@ -23,21 +24,18 @@ class ManagerComponent implements OnInit{
   final FoliosService _foliosService;
   final ApplicationRef _appRef;
 
-  var userid = null;
-  
   ObservableList<Folio> folios = toObservable(new List());
   Folio selectedFolio = null;
-  String idEmp = "";
-  String nomEmp = "";
+  User user = new User();
 
   ManagerComponent(this._router, this._routeParams, this._foliosService, this._appRef);
 
   Future<Null> ngOnInit() async {
-    userid = _routeParams.get('userid');
-    var f = await _foliosService.getFolios(userid);
+    user = globals.user;
+    var f = await _foliosService.getFolios(user.id);
     if(f != null && !f.isEmpty){
-      idEmp = f[0].idResponsable;
-      nomEmp = f[0].nombreResponsable;
+      globals.user.idEmp = f[0].idResponsable;
+      //globals.user.name = f[0].nombreResponsable;
     }
     folios.addAll(f);
   }
@@ -58,8 +56,8 @@ class ManagerComponent implements OnInit{
   Future goBack() => _router.navigate(['Login']);
 
 
-  Future addFolio(String folio, String proyecto, String idResp, String nomResp) {
-    var f = new Folio(folio, proyecto, idResp, nomResp);
+  Future addFolio(String folio, String proyecto, String idResp) {
+    var f = new Folio(folio, proyecto, idResp);
     folios.add(f);
     _appRef.tick();
     window.console.debug(folios.toString());
@@ -87,7 +85,7 @@ class ManagerComponent implements OnInit{
       html: true, acceptLabel: "Agregar", cancelLabel: "Cancelar", accept: (ModalDialog modal){
         String folio = (querySelector("#inFolio") as InputElement).value;
         String proy = (querySelector("#inNombreProyecto") as InputElement).value;
-        addFolio(folio, proy, idEmp, nomEmp);
+        addFolio(folio, proy, globals.user.idEmp);
         modal.close();
       })
       ..open();

@@ -122,6 +122,9 @@ form {
   text-align: right;
   width: 25%;
 }
+.form-horizontal .form-group .input-group .form-control{
+  width: 100%;
+}
 
 .budget-modal{
   /*left: 50%;
@@ -197,18 +200,18 @@ input::-webkit-input-placeholder {
     -moz-border-radius: 2px;
     -webkit-border-radius: 2px;
     border-radius: 2px;
-    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.3);
 
 }
 
 .main-center{
  	margin-top: 30px;
  	margin: 0 auto;
- 	max-width: 330px;
-    padding: 40px 40px;
-
+ 	min-width: 330px;
+ 	width: min-content;
+  padding: 40px 40px;
 }
 
 .login-button{

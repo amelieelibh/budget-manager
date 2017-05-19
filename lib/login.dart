@@ -21,23 +21,23 @@ class LoginComponent {
   final LoginService _loginService;
 
   LoginComponent(this._router, this._loginService);
-
-  User user = new User("man1", "pass");
+  
   String err = "";
+  User user = globals.user;
 
-  Future<User> login() async {
-    window.console.log("Login:"+this.user.id+","+this.user.pass);
-    user = await _loginService.login(this.user);
-    globals.user = user;
-    if(user.role == "admin"){
+  Future<Null> login() async { 
+    window.console.log("Login:" + globals.user.id + "," + globals.user.pass);
+    globals.user = await _loginService.login(user);
+    
+    if(globals.user.role == "admin"){
       _router.navigate([
-        'Admin', 
-        {'userid':user.id, 'role':user.role}
+        'Admin',
+        {'userid' : globals.user.id}
       ]);
-    }else if(user.role == "man"){
+    }else if(globals.user.role == "man"){
       _router.navigate([
-        'Manager', 
-        {'userid':user.id, 'role':user.role}
+        'Manager',
+        {'userid' : globals.user.id}
       ]);
     }else{
       Element dvMsg = querySelector('#errmsg');
@@ -51,6 +51,6 @@ class LoginComponent {
         });
       errMsg.open();*/
     }
-    return user;
+    //return user;
   }
 }

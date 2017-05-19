@@ -1,2 +1,25 @@
-<h2>Administrador del sistema. {{userid}}</h2>
-<button (click)="goBack()">Back</button>
+<div id="container">
+	<div class="main-login main-center">
+		<h2>Administrador del sistema. {{globals.user.id}}</h2>
+		<br/>
+		<h3>Usuarios en el sistema.</h3>
+		<table>
+			<thead>
+				<tr>
+					<td>ID</td>
+					<td>Nombre</td>
+					<td>Perfil</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let u of globals.users">
+					<td>{{u.idEmp}}</td>
+					<td>{{u.id}}</td>
+					<td>{{u.name}}</td>
+				</tr>
+			</tbody>
+		</table>
+		<br/>
+		<button (click)="goBack()">Back</button>
+	</div>
+</div>
