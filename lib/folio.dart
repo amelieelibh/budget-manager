@@ -26,8 +26,8 @@ class Folio{
     + " cc:" + cc
     + " centroCostos:" + centroCostos
     + " descripcion:" + descripcion
-    + " monto:" + monto
-    + " check:" + check;
+    + " monto:" + monto.toString()
+    + " check:" + check.toString();
   }
 
   static Folio EMPTY(){

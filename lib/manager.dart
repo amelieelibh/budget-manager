@@ -46,7 +46,7 @@ class ManagerComponent implements OnInit{
     gotoDetail(folio);
   }
 
-  Future gotoDetail(Folio folio){
+  Future<Void> gotoDetail(Folio folio){
     globals.folio = folio;
     _router.navigate([
         'FolioDetail'
@@ -56,13 +56,15 @@ class ManagerComponent implements OnInit{
   Future goBack() => _router.navigate(['Login']);
 
 
-  Future addFolio(String folio, String proyecto, String idResp) {
-    var f = new Folio(folio, proyecto, idResp);
+  Future<Void> addFolio(String folio, String idCC, String cc, String idResp,
+        String desc, double mount) {
+    var f = new Folio(folio : folio, centroCostos : cc, idResponsable : idResp,
+        cc : idCC, descripcion : desc, monto : mount);
     folios.add(f);
     _appRef.tick();
     window.console.debug(folios.toString());
   }
-  Future createFolio(){
+  Future<Void> createFolio(){
     String htmlContent = """
       <h3>Completa la información del nuevo folio</h3>
       <form id="new-folio-form" action="#" class="form-horizontal">
@@ -73,10 +75,31 @@ class ManagerComponent implements OnInit{
               placeholder="Folio del proyecto" />
         </div>
         <div class="form-group">
-          <label class="control-label" for="inNombreProyecto">Proyecto:</label>
-          <input id="inNombreProyecto"
+          <label class="control-label" for="inCC">CC:</label>
+          <input id="inCC"
               type="text" class="form-control" required
-              placeholder="Nombre del proyecto" />
+              placeholder="Id del centro de Costos" />
+          <br/>
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="inCentroCostos">Centro de Costos:</label>
+          <input id="inCentroCostos"
+              type="text" class="form-control" required
+              placeholder="Centro de Costos" />
+          <br/>
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="inDescripcion">Descrici&oacute;n:</label>
+          <input id="inDescripcion"
+              type="text" class="form-control" required
+              placeholder="Descripción corta del proyecto" />
+          <br/>
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="inMonto">Monto:</label>
+          <input id="inMonto"
+              type="number" step="0.01" class="form-control" required
+              placeholder="Descripción corta del proyecto" />
           <br/>
         </div>
       </form>
@@ -84,8 +107,11 @@ class ManagerComponent implements OnInit{
     var modal = new ModalConfirm("Nuevo Folio", htmlContent,
       html: true, acceptLabel: "Agregar", cancelLabel: "Cancelar", accept: (ModalDialog modal){
         String folio = (querySelector("#inFolio") as InputElement).value;
-        String proy = (querySelector("#inNombreProyecto") as InputElement).value;
-        addFolio(folio, proy, globals.user.idEmp);
+        String idCC = (querySelector("#inCC") as InputElement).value;
+        String centroCostos = (querySelector("#inCentroCostos") as InputElement).value;
+        String desc = (querySelector("#inDescripcion") as InputElement).value;
+        String monto = (querySelector("#inMonto") as InputElement).value;
+        addFolio(folio, idCC, centroCostos, globals.user.idEmp, desc, monto);
         modal.close();
       })
       ..open();

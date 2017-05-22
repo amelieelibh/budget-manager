@@ -6,4 +6,4 @@ import 'folio.dart';
 
 //@observable
 User user = new User(id : "man1", pass:"pass");
-Folio folio = new Folio("", "", "");
+Folio folio = new Folio();
