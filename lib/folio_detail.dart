@@ -80,11 +80,37 @@ class FolioDetailComponent implements OnInit{
     
   }
 
+  Future<String> divAcc() async{
+    return BudgetConstants.divAcc;
+  }
+  Future<String> divCfdi() async{
+    return BudgetConstants.divCfdi;
+  }
+  Future<String> divDesc() async{
+    return BudgetConstants.divDesc;
+  }
+  Future<String> divEid() async{
+    return BudgetConstants.divEid;
+  }
+  Future<String> divEname() async{
+    return BudgetConstants.divEname;
+  }
+  Future<String> divMount() async{
+    return BudgetConstants.divMount;
+  }
+  Future<String> divRfc() async{
+    return BudgetConstants.divRfc;
+  }
+  
+
   Future<Null> ngOnInit() async {
     folio = globals.folio;
     user = globals.user;
     var b = await _billsService.getBills(folio.folio);
     bills.addAll(b);
+
+    if(true)return;
+
     TableElement table = new TableElement();
     table.classes..add("pure-table")..add("pure-table-horizontal");
 
@@ -142,12 +168,7 @@ class FolioDetailComponent implements OnInit{
         ..setAttribute("data-target", "#details"+i.toString())
         ..onClick.listen((MouseEvent event) => onShowDetail(event));
       
-      var butUploadCfdi = new MaterialInputComponent("file", "", null, null, null)
-      //new GlyphComponent()
-        ..leadingGlyph = "file_upload"
-        ..inputEl.nativeElement.name = "upload"+i.toString()
-        ..inputEl.nativeElement.id = "id" + BudgetConstants.butUploadCfdi+i.toString()
-      ;
+      //var butUploadCfdi = 
       /*new LabelElement()
         ..htmlFor = "upload"+i.toString()
         ..children.addAll([
@@ -166,7 +187,7 @@ class FolioDetailComponent implements OnInit{
             ..setAttribute("id", BudgetConstants.butDownloadCfdi+i.toString())
             ..setAttribute("name", i.toString())..style.visibility=(b.cfdi != null && !b.cfdi.isEmpty ? "" : "hidden")
         )..target = "_blank";
-      cfdi.children.addAll([butUploadCfdi.inputEl.nativeElement, butDownloadCfdi]);
+      cfdi.children.addAll([/*butUploadCfdi.inputEl.nativeElement,*/ butDownloadCfdi]);
       
 
       newLine

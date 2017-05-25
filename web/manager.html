@@ -1,7 +1,7 @@
 <div class="main-login main-center">
  <h2>Bienvenido {{user.name}}</h2>
  <h3>Folios Asignados</h3>
- <table class="mdl-data-table mdl-js-data-table">
+ <table class="mdl-data-table mdl-js-data-table stripped-table">
   <thead>
    <tr>
     <th class="mdl-data-table__cell--non-numeric">Comprobado</th>
@@ -16,15 +16,16 @@
    <tr *ngFor="let folio of folios" 
    [class.selected]="folio === selectedFolio"
    (click)="onSelect(folio)">
-    <td class="mdl-data-table__cell--non-numeric">{{folio.check}}</td>
-    <td class="mdl-data-table__cell--non-numeric">{{folio.folio}}</td>
-    <td class="mdl-data-table__cell--non-numeric">{{folio.cc}}</td>
-    <td class="mdl-data-table__cell--non-numeric">{{folio.centroCostos}}</td>
-    <td class="mdl-data-table__cell--non-numeric">{{folio.descripcion}}</td>
-    <td class="mdl-data-table__cell--non-numeric">{{folio.monto}}</td>
+    <td class="mdl-data-table__cell--non-numeric check">{{folio.check}}</td>
+    <td class="mdl-data-table__cell--non-numeric folio">{{folio.folio}}</td>
+    <td class="mdl-data-table__cell--non-numeric cc">{{folio.cc}}</td>
+    <td class="mdl-data-table__cell--non-numeric centro-costos">{{folio.centroCostos}}</td>
+    <td class="mdl-data-table__cell--non-numeric descripcion">{{folio.descripcion}}</td>
+    <td class="mdl-data-table__cell--non-numeric monto">{{folio.monto}}</td>
    </tr>
   </tbody>
  </table>
+ <br/>
  <button class="btn btn-primary pull-right" (click)="createFolio()">Asignar Folio</button>
  <button class="btn btn-inverse" (click)="goBack()">Back</button>
 </div>

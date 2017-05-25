@@ -1,12 +1,64 @@
 <div class="main-login main-center">
     <!--<link rel="stylesheet" href="styles.css"> -->
-    <h2 style="color: darkslategrey">Folio: {{folio.folio}} - {{folio.nombreProyecto}}</h2>
+    <h2 style="color: darkslategrey">Folio: {{folio.folio}} - {{folio.centroCostos}}</h2>
     <h3 style="color: darkslategrey">Responsable: {{user.name}}</h3>
     <h4 style="color: darkslategrey">Id Responsable: {{user.idEmp}}</h4>
     <br>
     <div>
         <h4>Lista de Gastos</h4>
-        <div id="budget"></div>
+        <div id="budget">
+            <table class="mdl-data-table mdl-js-data-table">
+                <thead>
+                    <tr>
+                        <th class="mdl-data-table__cell--non-numeric"></th>
+                        <th class="mdl-data-table__cell--non-numeric">#</th>
+                        <th class="mdl-data-table__cell--non-numeric">Cta Contable</th>
+                        <th class="mdl-data-table__cell--non-numeric">Monto</th>
+                        <th class="mdl-data-table__cell--non-numeric">RFC proveedor</th>
+                        <th class="mdl-data-table__cell--non-numeric">CFDI</th>
+                        <th class="mdl-data-table__cell--non-numeric">Descripci&oacute;n</th>
+                        <th class="mdl-data-table__cell--non-numeric">Detalle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let b of bills;let i = index">
+                        <td>
+                            <div>
+                                
+                            </div>
+                        </td>
+                        <td>
+                            {{i+1}}
+                        </td>
+                        <td class="mdl-data-table__cell--non-numeric">
+                            <div id="{{divAcc}}{{i+1}}">
+                                {{b.contableAccount}}
+                            </div>
+                        </td>
+                        <td>
+                            <div id="{{divMount}}{{i+1}}">
+                                {{b.mount.toStringAsFixed(2)}}
+                            </div>
+                        </td>
+                        <td class="mdl-data-table__cell--non-numeric">
+                            <div id="{{divRfc}}{{i+1}}">
+                                {{b.rfc}}
+                            </div>
+                        </td>
+                        <td class="mdl-data-table__cell--non-numeric">
+                            <div id="{{divCfdi}}{{i+1}}">
+                                {{b.cfdi}}
+                            </div>
+                        </td>
+                        <td class="mdl-data-table__cell--non-numeric">
+                            <div id="{{divDesc}}{{i+1}}">
+                                {{b.desc}}
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
     <br>
     

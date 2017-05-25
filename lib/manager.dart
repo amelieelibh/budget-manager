@@ -42,7 +42,6 @@ class ManagerComponent implements OnInit{
 
   void onSelect(Folio folio) {
     selectedFolio = folio;
-    //window.alert(folio.folio+","+folio.nombreProyecto);
     gotoDetail(folio);
   }
 
