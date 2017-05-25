@@ -21,39 +21,79 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let b of bills;let i = index">
-                        <td>
-                            <div>
-                                
-                            </div>
-                        </td>
-                        <td>
-                            {{i+1}}
-                        </td>
-                        <td class="mdl-data-table__cell--non-numeric">
-                            <div id="{{divAcc}}{{i+1}}">
-                                {{b.contableAccount}}
-                            </div>
-                        </td>
-                        <td>
-                            <div id="{{divMount}}{{i+1}}">
-                                {{b.mount.toStringAsFixed(2)}}
-                            </div>
-                        </td>
-                        <td class="mdl-data-table__cell--non-numeric">
-                            <div id="{{divRfc}}{{i+1}}">
-                                {{b.rfc}}
-                            </div>
-                        </td>
-                        <td class="mdl-data-table__cell--non-numeric">
-                            <div id="{{divCfdi}}{{i+1}}">
-                                {{b.cfdi}}
-                            </div>
-                        </td>
-                        <td class="mdl-data-table__cell--non-numeric">
-                            <div id="{{divDesc}}{{i+1}}">
-                                {{b.desc}}
-                            </div>
+                    <tr>
+                        <td style="colSpan: 7">
+                            <table class="mdl-data-table mdl-js-data-table">
+                                <tbody>
+                                    <tr *ngFor="let b of bills;let i = index">
+                                        <td>
+                                            <div>
+                                                <material-fab mini raised (trigger)="onEditRow"
+                                                    [visible]="true"
+                                                    id="{{butEdit}}{{i+1}}"
+                                                    name="{{i+1}}">
+                                                    <glyph icon="mode_edit"></glyph>
+                                                </material-fab>
+                                                <material-fab mini raised (trigger)="onEditOkRow"
+                                                    [visible]="false"
+                                                    id="{{butEditOk}}{{i+1}}"
+                                                    name="{{i+1}}">
+                                                    <glyph icon="check_circle"></glyph>
+                                                </material-fab>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            {{i+1}}
+                                        </td>
+                                        <td class="mdl-data-table__cell--non-numeric">
+                                            <div id="{{divAcc}}{{i+1}}">
+                                                {{b.contableAccount}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div id="{{divMount}}{{i+1}}">
+                                                {{b.mount.toStringAsFixed(2)}}
+                                            </div>
+                                        </td>
+                                        <td class="mdl-data-table__cell--non-numeric">
+                                            <div id="{{divRfc}}{{i+1}}">
+                                                {{b.rfc}}
+                                            </div>
+                                        </td>
+                                        <td class="mdl-data-table__cell--non-numeric">
+                                            <div id="{{divCfdi}}{{i+1}}">
+                                                {{b.cfdi}}
+                                            </div>
+                                        </td>
+                                        <td class="mdl-data-table__cell--non-numeric">
+                                            <div id="{{divDesc}}{{i+1}}">
+                                                {{b.desc}}
+                                            </div>
+                                        </td>
+                                        <td class="mdl-data-table__cell--non-numeric">
+                                            <div>
+                                                <material-fab mini raised (trigger)="onShowDetail"
+                                                    id="{{butDetail}}{{i+1}}"
+                                                    name="{{i+1}}"
+                                                    data-toggle="collapse"
+                                                    data-target="#details{{i+1}}">
+                                                    <glyph icon="check_circle"></glyph>
+                                                </material-fab>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="collapse" id="details{{i+1}}">
+                                        <td class="mdl-data-table__cell--non-numeric"
+                                                style="colSpan: 7">
+                                            <ul>
+                                                <li >
+                                                    test
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </td>
                     </tr>
                 </tbody>

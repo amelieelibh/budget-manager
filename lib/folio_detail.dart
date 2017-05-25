@@ -19,7 +19,10 @@ import 'package:observable/observable.dart';
   templateUrl: '../web/folio-detail.html',
   providers: const[
     BillsService
-  ]
+  ],
+  directives: const[
+    materialDirectives  
+  ],
 )
 class FolioDetailComponent implements OnInit{
   final Router _router;
@@ -32,6 +35,7 @@ class FolioDetailComponent implements OnInit{
   Folio folio = new Folio();
   ObservableList<Bill> bills = toObservable(new List());
   User user = new User();
+  var i = 0;
 
   void updateTableView(String i, bool isEditable){
     var editable = isEditable ? "true" : "false";
@@ -101,7 +105,15 @@ class FolioDetailComponent implements OnInit{
   Future<String> divRfc() async{
     return BudgetConstants.divRfc;
   }
-  
+  Future<String> butEdit() async{
+    return BudgetConstants.butEdit;
+  }
+  Future<String> butEditOk() async{
+    return BudgetConstants.butEditOk;
+  }
+  Future<String> butDetail() async{
+    return BudgetConstants.butDetail;
+  }
 
   Future<Null> ngOnInit() async {
     folio = globals.folio;
