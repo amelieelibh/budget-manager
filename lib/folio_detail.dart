@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:angular2/core.dart';
 import 'package:angular2/router.dart';
 import 'dart:html';
+import 'package:angular_components/angular_components.dart';
 
 import 'globals.dart' as globals;
 import 'bills_service.dart';
@@ -28,7 +29,7 @@ class FolioDetailComponent implements OnInit{
 
   FolioDetailComponent(this._router, this._routeParams, this._billsService, this._appRef);
   
-  Folio folio = new Folio("", "", "");
+  Folio folio = new Folio();
   ObservableList<Bill> bills = toObservable(new List());
   User user = new User();
 
@@ -141,8 +142,13 @@ class FolioDetailComponent implements OnInit{
         ..setAttribute("data-target", "#details"+i.toString())
         ..onClick.listen((MouseEvent event) => onShowDetail(event));
       
-
-      var butUploadCfdi = new LabelElement()
+      var butUploadCfdi = new MaterialInputComponent("file", "", null, null, null)
+      //new GlyphComponent()
+        ..leadingGlyph = "file_upload"
+        ..inputEl.nativeElement.name = "upload"+i.toString()
+        ..inputEl.nativeElement.id = "id" + BudgetConstants.butUploadCfdi+i.toString()
+      ;
+      /*new LabelElement()
         ..htmlFor = "upload"+i.toString()
         ..children.addAll([
           new SpanElement()..classes.addAll(["glyphicon","glyphicon-upload"])
@@ -153,14 +159,14 @@ class FolioDetailComponent implements OnInit{
             ..id = "upload" + i.toString()
             ..name = "files[]" ..style.display = "none"
             ..onChange.listen((event)=> uploadFiles(event))
-        ]);
+        ]);*/
       var butDownloadCfdi = new AnchorElement()..href = b.cfdi
         ..children.add(
           new SpanElement()..classes.addAll(["glyphicon","glyphicon-download-alt"])
             ..setAttribute("id", BudgetConstants.butDownloadCfdi+i.toString())
             ..setAttribute("name", i.toString())..style.visibility=(b.cfdi != null && !b.cfdi.isEmpty ? "" : "hidden")
         )..target = "_blank";
-      cfdi.children.addAll([butUploadCfdi, butDownloadCfdi]);
+      cfdi.children.addAll([butUploadCfdi.inputEl.nativeElement, butDownloadCfdi]);
       
 
       newLine
@@ -204,7 +210,8 @@ class FolioDetailComponent implements OnInit{
   Future goBack() { 
     globals.folio = Folio.EMPTY();
     _router.navigate([
-        'Manager'
+        'Manager',
+        {'userid' : globals.user.id}
       ]
     );
   }

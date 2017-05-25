@@ -5,6 +5,7 @@ import 'dart:html';
 import 'dart:async';
 import 'package:angular2/core.dart';
 import 'package:angular2/router.dart';
+import 'package:angular_components/angular_components.dart';
 
 import 'globals.dart' as globals;
 import 'login_service.dart';
@@ -12,11 +13,14 @@ import 'user.dart';
 import 'package:modal_dialog/core.dart';
 
 @Component(selector: 'login-view', templateUrl: '../web/login.html',
+  directives: const[
+    materialDirectives  
+  ],
   providers: const[
     LoginService
-  ]
+  ],
 )
-class LoginComponent {
+class LoginComponent implements OnInit{
   final Router _router;
   final LoginService _loginService;
 
@@ -24,6 +28,12 @@ class LoginComponent {
   
   String err = "";
   User user = globals.user;
+  
+  @override
+  Future<Null> ngOnInit() async {
+    globals.user = new User(id : "man1", pass:"pass");
+    user = globals.user;
+  }
 
   Future<Null> login() async { 
     window.console.log("Login:" + globals.user.id + "," + globals.user.pass);

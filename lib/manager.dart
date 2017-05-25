@@ -46,7 +46,7 @@ class ManagerComponent implements OnInit{
     gotoDetail(folio);
   }
 
-  Future<Void> gotoDetail(Folio folio){
+  Future gotoDetail(Folio folio){
     globals.folio = folio;
     _router.navigate([
         'FolioDetail'
@@ -56,7 +56,7 @@ class ManagerComponent implements OnInit{
   Future goBack() => _router.navigate(['Login']);
 
 
-  Future<Void> addFolio(String folio, String idCC, String cc, String idResp,
+  Future addFolio(String folio, String idCC, String cc, String idResp,
         String desc, double mount) {
     var f = new Folio(folio : folio, centroCostos : cc, idResponsable : idResp,
         cc : idCC, descripcion : desc, monto : mount);
@@ -64,7 +64,7 @@ class ManagerComponent implements OnInit{
     _appRef.tick();
     window.console.debug(folios.toString());
   }
-  Future<Void> createFolio(){
+  Future createFolio(){
     String htmlContent = """
       <h3>Completa la información del nuevo folio</h3>
       <form id="new-folio-form" action="#" class="form-horizontal">
@@ -110,7 +110,7 @@ class ManagerComponent implements OnInit{
         String idCC = (querySelector("#inCC") as InputElement).value;
         String centroCostos = (querySelector("#inCentroCostos") as InputElement).value;
         String desc = (querySelector("#inDescripcion") as InputElement).value;
-        String monto = (querySelector("#inMonto") as InputElement).value;
+        double monto = double.parse((querySelector("#inMonto") as InputElement).value);
         addFolio(folio, idCC, centroCostos, globals.user.idEmp, desc, monto);
         modal.close();
       })

@@ -133,27 +133,6 @@ form {
   display: flex;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-/* Created by Filipe Pina
- * Specific styles of signin, register, component
- */
 /*
  * General styles
  */
@@ -169,7 +148,7 @@ body, html{
  	margin-top: 70px;
 }
 
-h1.title { 
+h1 .title { 
 	font-size: 50px;
 	font-family: 'Passion One', cursive; 
 	font-weight: 400; 
@@ -221,4 +200,24 @@ input::-webkit-input-placeholder {
 .login-register{
 	font-size: 11px;
 	text-align: center;
+}
+
+.quarter-form{
+  min-width: min-content;
+  width: 25%;
+}
+.half-form{
+  min-width: min-content;
+  width: 50%;
+}
+
+@media screen and (max-device-width: 320px) {
+    .quarter-form{
+      min-width: min-content;
+      width: 100%;
+    }
+    .half-form{
+      min-width: min-content;
+      width: 100%;
+    }
 }

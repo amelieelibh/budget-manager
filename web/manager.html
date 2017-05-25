@@ -1,14 +1,14 @@
 <div class="main-login main-center">
  <h2>Bienvenido {{user.name}}</h2>
  <h3>Folios Asignados</h3>
- <table>
+ <table class="mdl-data-table mdl-js-data-table">
   <thead>
    <tr>
-    <th>Comprobado</th>
-    <th>Folio</th>
-    <th>#CC</th>
-    <th>Centro de Costos</th>
-    <th>Descripci&oacute;n</th>
+    <th class="mdl-data-table__cell--non-numeric">Comprobado</th>
+    <th class="mdl-data-table__cell--non-numeric">Folio</th>
+    <th class="mdl-data-table__cell--non-numeric">#CC</th>
+    <th class="mdl-data-table__cell--non-numeric">Centro de Costos</th>
+    <th class="mdl-data-table__cell--non-numeric">Descripci&oacute;n</th>
     <th>Monto</th>
    </tr>
   </thead>
@@ -16,12 +16,12 @@
    <tr *ngFor="let folio of folios" 
    [class.selected]="folio === selectedFolio"
    (click)="onSelect(folio)">
-    <th>{{folio.check}}</th>
-    <th>{{folio.folio}}</th>
-    <th>{{folio.cc}}</th>
-    <th>{{folio.centroCostos}}</th>
-    <th>{{folio.desscripcion}}</th>
-    <th>{{folio.monto}}</th>
+    <td class="mdl-data-table__cell--non-numeric">{{folio.check}}</td>
+    <td class="mdl-data-table__cell--non-numeric">{{folio.folio}}</td>
+    <td class="mdl-data-table__cell--non-numeric">{{folio.cc}}</td>
+    <td class="mdl-data-table__cell--non-numeric">{{folio.centroCostos}}</td>
+    <td class="mdl-data-table__cell--non-numeric">{{folio.descripcion}}</td>
+    <td class="mdl-data-table__cell--non-numeric">{{folio.monto}}</td>
    </tr>
   </tbody>
  </table>
