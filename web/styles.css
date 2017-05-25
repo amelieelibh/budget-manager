@@ -203,21 +203,22 @@ input::-webkit-input-placeholder {
 }
 
 .quarter-form{
-  min-width: min-content;
-  width: 25%;
+	text-align: right;
+	margin-right: 15px;
+	width: 25%;
 }
 .half-form{
-  min-width: min-content;
-  width: 50%;
+  width: 100%;
+  max-width: 50%;
 }
 
-@media screen and (max-device-width: 320px) {
+@media screen and (max-width: 320px) {
     .quarter-form{
-      min-width: min-content;
+      text-align: left;
       width: 100%;
     }
     .half-form{
-      min-width: min-content;
       width: 100%;
+      max-width: 100%;
     }
 }
