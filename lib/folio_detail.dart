@@ -4,6 +4,7 @@ import 'package:angular2/core.dart';
 import 'package:angular2/router.dart';
 import 'dart:html';
 import 'package:angular_components/angular_components.dart';
+import 'package:angular2/angular2.dart';
 
 import 'globals.dart' as globals;
 import 'bills_service.dart';
@@ -78,41 +79,28 @@ class FolioDetailComponent implements OnInit{
     bool show = e.classes.contains("glyphicon-zoom-in");
     showDetail(i, show);
   }
-  void uploadCfdi(MouseEvent event){
-    Element e = event.target;
-    var i = e.getAttribute("name");
-    
+  void uploadCfdi(var i){
+    //Element e = event.target;
+    //var i = e.getAttribute("name");
+    //window.alert("upload"+i.toString());
+    //querySelector("#upload"+i.toString()).click();
   }
 
-  Future<String> divAcc() async{
-    return BudgetConstants.divAcc;
-  }
-  Future<String> divCfdi() async{
-    return BudgetConstants.divCfdi;
-  }
-  Future<String> divDesc() async{
-    return BudgetConstants.divDesc;
-  }
-  Future<String> divEid() async{
-    return BudgetConstants.divEid;
-  }
-  Future<String> divEname() async{
-    return BudgetConstants.divEname;
-  }
-  Future<String> divMount() async{
-    return BudgetConstants.divMount;
-  }
-  Future<String> divRfc() async{
-    return BudgetConstants.divRfc;
-  }
-  Future<String> butEdit() async{
-    return BudgetConstants.butEdit;
-  }
-  Future<String> butEditOk() async{
-    return BudgetConstants.butEditOk;
-  }
-  Future<String> butDetail() async{
-    return BudgetConstants.butDetail;
+  String get divAcc => BudgetConstants.divAcc;
+  String get divCfdi => BudgetConstants.divCfdi;
+  String get divDesc => BudgetConstants.divDesc;
+  String get divEid => BudgetConstants.divEid;
+  String get divEname => BudgetConstants.divEname;
+  String get divMount => BudgetConstants.divMount;
+  String get divRfc => BudgetConstants.divRfc;
+  String get butEdit => BudgetConstants.butEdit;
+  String get butEditOk => BudgetConstants.butEditOk;
+  String get butDetail => BudgetConstants.butDetail;
+  String get butUploadCfdi => BudgetConstants.butUploadCfdi;
+  
+  Future<Null> toggleCollapse(var i) async { 
+    //window.alert("hola"+i.toString());
+    querySelector("#details"+i.toString()).classes.toggle("collapse");
   }
 
   Future<Null> ngOnInit() async {
@@ -274,7 +262,7 @@ class FolioDetailComponent implements OnInit{
      return r;
   }
 
-  Future uploadFiles(Event event){
+  Future uploadFiles(var i){
     var mm = new ModalMessage("Carga de Archivos", "Archivos Cargados")
       ..modal.element.style.left = "50%"
       ..modal.element.style.top = "50%"

@@ -7,7 +7,7 @@
     <div>
         <h4>Lista de Gastos</h4>
         <div id="budget">
-            <table class="mdl-data-table mdl-js-data-table">
+            <table class="mdl-data-table mdl-js-data-table flat-table">
                 <thead>
                     <tr>
                         <th class="mdl-data-table__cell--non-numeric"></th>
@@ -20,84 +20,98 @@
                         <th class="mdl-data-table__cell--non-numeric">Detalle</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td style="colSpan: 7">
+            </table>
+                <!--<tbody>
+                    <tr *ngFor="let b of bills;let i = index">
+                        <td colspan="7">-->
+            <div *ngFor="let b of bills;let i = index">
                             <table class="mdl-data-table mdl-js-data-table">
                                 <tbody>
-                                    <tr *ngFor="let b of bills;let i = index">
-                                        <td>
+                                    <tr>
+                                        <td class="mdl-data-table__cell--non-numeric">
                                             <div>
                                                 <material-fab mini raised (trigger)="onEditRow"
-                                                    [visible]="true"
+                                                    [hidden]="false"
                                                     id="{{butEdit}}{{i+1}}"
                                                     name="{{i+1}}">
                                                     <glyph icon="mode_edit"></glyph>
                                                 </material-fab>
                                                 <material-fab mini raised (trigger)="onEditOkRow"
-                                                    [visible]="false"
+                                                    [hidden]="true"
                                                     id="{{butEditOk}}{{i+1}}"
                                                     name="{{i+1}}">
                                                     <glyph icon="check_circle"></glyph>
                                                 </material-fab>
                                             </div>
                                         </td>
-                                        <td>
+                                        <td class="hash">
                                             {{i+1}}
                                         </td>
-                                        <td class="mdl-data-table__cell--non-numeric">
+                                        <td class="mdl-data-table__cell--non-numeric cta-contable">
                                             <div id="{{divAcc}}{{i+1}}">
                                                 {{b.contableAccount}}
                                             </div>
                                         </td>
-                                        <td>
+                                        <td class="monto">
                                             <div id="{{divMount}}{{i+1}}">
                                                 {{b.mount.toStringAsFixed(2)}}
                                             </div>
                                         </td>
-                                        <td class="mdl-data-table__cell--non-numeric">
+                                        <td class="mdl-data-table__cell--non-numeric rfc-proveedor">
                                             <div id="{{divRfc}}{{i+1}}">
                                                 {{b.rfc}}
                                             </div>
                                         </td>
-                                        <td class="mdl-data-table__cell--non-numeric">
+                                        <td class="mdl-data-table__cell--non-numeric cfdi">
                                             <div id="{{divCfdi}}{{i+1}}">
-                                                {{b.cfdi}}
+                                                <!--<label [htmlFor]="'upload' + (i+1).toString()">-->
+                                                <label>
+                                                    <glyph icon="file_upload" id="{{butUploadCfdi}}{{i+1}}"
+                                                        (click)="uploadCfdi(i+1)"></glyph>
+                                                    <material-input type="file"
+                                                        id="upload{{i+1}}" [hidden]="true"
+                                                        name="files[]" (change)="uploadFiles(i)">
+                                                        </material-input>
+                                                </label>
+                                                <a href="{{b.cfdi}}" target="_blank"
+                                                    [hidden]="b.cfdi == null || b.cfdi.isEmpty">
+                                                    <glyph icon="file_download"></glyph>
+                                                </a>
                                             </div>
                                         </td>
-                                        <td class="mdl-data-table__cell--non-numeric">
+                                        <td class="mdl-data-table__cell--non-numeric descripcion">
                                             <div id="{{divDesc}}{{i+1}}">
                                                 {{b.desc}}
                                             </div>
                                         </td>
-                                        <td class="mdl-data-table__cell--non-numeric">
+                                        <td class="mdl-data-table__cell--non-numeric detalle">
                                             <div>
                                                 <material-fab mini raised (trigger)="onShowDetail"
                                                     id="{{butDetail}}{{i+1}}"
                                                     name="{{i+1}}"
-                                                    data-toggle="collapse"
-                                                    data-target="#details{{i+1}}">
-                                                    <glyph icon="check_circle"></glyph>
+                                                    (trigger)="toggleCollapse(i+1)">
+                                                    <glyph icon="details"></glyph>
                                                 </material-fab>
                                             </div>
                                         </td>
                                     </tr>
                                     <tr class="collapse" id="details{{i+1}}">
                                         <td class="mdl-data-table__cell--non-numeric"
-                                                style="colSpan: 7">
+                                                colSpan="7">
                                             <ul>
-                                                <li >
-                                                    test
+                                                <li *ngFor="let key of b.employees.keys">
+                                                    <span>{{key}} : {{b.employees[key]}}</span>
                                                 </li>
                                             </ul>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
-                        </td>
+                        <!--</td>
                     </tr>
                 </tbody>
-            </table>
+            </table>-->
+            </div>
         </div>
     </div>
     <br>

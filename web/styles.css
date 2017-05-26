@@ -250,8 +250,8 @@ td, th {
 }
 
 @media 
-only screen and (max-width: 760px),
-(min-device-width: 768px) and (max-device-width: 1024px)  {
+only screen and (max-width: 760px) and (orientation: portrait),
+(min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
   .quarter-form{
     text-align: left;
     width: 100%;
@@ -282,9 +282,24 @@ only screen and (max-width: 760px),
   }
   
 	/* Force table to not be like tables anymore */
-	table, thead, tbody, th, td, tr { 
+	table,
+  table thead,
+  table tbody,
+  table thead th,
+  table tbody tr,
+  table tbody tr td,
+  table thead th td { 
 		display: block; 
 	}
+  table.flat-table, 
+  table.flat-table thead,
+  table.flat-table tbody,
+  table.flat-table thead th,
+  table.flat-table tbody tr td,
+  table.flat-table tbody th td,
+  table.flat-table tbody tr{
+    display: initial;
+  }
 	
 	/* Hide table headers (but not display: none;, for accessibility) */
 	thead tr { 
@@ -321,10 +336,14 @@ only screen and (max-width: 760px),
 	td.folio:nth-of-type(2):before { content: "Folio"; }
 	td.cc:nth-of-type(3):before { content: "#CC"; }
 	td.centro-costos:nth-of-type(4):before { content: "Centro de Costos"; }
-	td.descripcion:nth-of-type(5):before  { content: "Descripcion"; }
+	td.descripcion:nth-of-type(5):before  { content: "Descripci&oacute;n"; }
 	td.monto:nth-of-type(6):before { content: "Monto"; }
-	td.x1:nth-of-type(1):before { content: "Date of Birth"; }
-	td.x2:nth-of-type(2):before { content: "Dream Vacation City"; }
-	td.x3:nth-of-type(3):before { content: "GPA"; }
-	td.x4:nth-of-type(4):before { content: "Arbitrary Data"; }
+
+	td.hash:nth-of-type(2):before { content: "#"; }
+	td.cta-contable:nth-of-type(3):before { content: "Cta Contable"; }
+  td.monto:nth-of-type(4):before { content: "Monto"; }
+	td.rfc-proveedor:nth-of-type(5):before { content: "RFC Proveedor"; }
+	td.cfdi:nth-of-type(6):before { content: "CFDI"; }
+  td.descripcion:nth-of-type(7):before  { content: "Descripci&oacute;n"; }
+  td.detalle:nth-of-type(8):before { content: "Detalle"; }
 }
