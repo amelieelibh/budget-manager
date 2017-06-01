@@ -18,6 +18,20 @@ class Folio{
     this.monto = monto;
     this.check = check;
   }
+
+  bool isFillled(){
+    return !folio.isEmpty && !idResponsable.isEmpty
+        && !cc.isEmpty && monto > 0.0;
+  }
+  void clear(){
+    this.folio = "";
+    this.idResponsable = "";
+    this.cc = "";
+    this.centroCostos = "";
+    this.descripcion = "";
+    this.monto = 0.0;
+    this.check = false;
+  }
   
   @override
   String toString(){

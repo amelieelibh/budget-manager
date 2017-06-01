@@ -9,7 +9,8 @@
                     <material-input type="text" id="id" required class="half-form"
                             [(ngModel)]="user.id" placeholder="Nombre de Usuario"
                             errorMsg="Se necesita un nombre de usuario válido"
-                            leadingGlyph="account_box"> 
+                            leadingGlyph="account_box" autofocus
+                            (keyup)="onKey($event)" >
                     </material-input>
                 </div>
                 <br/>
@@ -18,7 +19,8 @@
                     <material-input type="password" id="pass" required class="half-form"
                             [(ngModel)]="user.pass" placeholder="Contraseña"
                             errorMsg="Constraseña inválida"
-                            leadingGlyph="lock">
+                            leadingGlyph="lock"
+                            (keyup)="onKey($event)" >
                     </material-input>
                 </div>
                 <div id="errmsg" style="visibility: hidden; color:crimson;">

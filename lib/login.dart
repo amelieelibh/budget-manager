@@ -4,17 +4,23 @@
 import 'dart:html';
 import 'dart:async';
 import 'package:angular2/core.dart';
+import 'package:angular2/angular2.dart';
 import 'package:angular2/router.dart';
 import 'package:angular_components/angular_components.dart';
 
 import 'globals.dart' as globals;
 import 'login_service.dart';
 import 'user.dart';
-import 'package:modal_dialog/core.dart';
 
 @Component(selector: 'login-view', templateUrl: '../web/login.html',
   directives: const[
-    materialDirectives  
+    NgModel,
+    CORE_DIRECTIVES,
+    GlyphComponent,
+    MaterialButtonComponent,
+    MaterialFabComponent,
+    MaterialInputComponent,
+    MaterialInputDefaultValueAccessor,
   ],
   providers: const[
     LoginService
@@ -62,5 +68,12 @@ class LoginComponent implements OnInit{
       errMsg.open();*/
     }
     //return user;
+  }
+
+  void onKey(dynamic  event) {
+    KeyEvent keyEvent = new KeyEvent.wrap(event);
+    if (keyEvent.keyCode == KeyCode.ENTER) {
+      login();
+    }
   }
 }

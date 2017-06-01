@@ -12,7 +12,6 @@ import 'bill.dart';
 import 'constants.dart';
 import 'user.dart';
 import 'folio.dart';
-import 'package:modal_dialog/core.dart';
 import 'package:observable/observable.dart';
 
 @Component(

@@ -10,30 +10,31 @@ environment:
 
 dependencies:
   angular2: '>=3.0.0 <4.0.0'
-  modal_dialog: "^2.0.0"
   angular_components: "^0.5.2"
   
   ng_bootstrap: '^0.6.3'
+  browser: "^0.10.0+2"
   
   fixnum: ^0.10.5
   intl: '>=0.14.0 <0.16.0'
+  dart_to_js_script_rewriter: "^1.0.2"
   
   #js: ^0.6.1
   #uuid: ^0.5.3
   
-  #uri: "^0.11.0"
-  #rpc: "^0.5.6+3"
+  uri: "^0.11.0"
+  rpc: "^0.5.6+3"
   http_server: "^0.9.6"
   appengine: '>=0.4.0 <0.5.0'
   
   logging_handlers: ^0.8.0
   
 dev_dependencies:
-  browser: "^0.10.0+2"
-  dart_to_js_script_rewriter: "^1.0.2"
+  webdriver: ^1.2.1
   
 dependency_overrides:
   #quiver: '>=0.17.0 <0.22.0'
+  quiver: '>=0.22.0 <0.26.0'
   #uri: "^0.10.0"
   
 transformers:
@@ -44,7 +45,6 @@ transformers:
 #    platform_pipes:
 #    - 'package:angular2/common.dart#COMMON_PIPES'
 #    entry_points: web/main.dart
-- dart_to_js_script_rewriter
 - angular2:
     platform_directives:
     - 'package:angular2/common.dart#COMMON_DIRECTIVES'
@@ -55,3 +55,6 @@ transformers:
       Observable: 'package:observable/observable.dart'
       Profiler: 'package:perf_api/perf_api.dart'
       Window: 'dart:html'
+- $dart2js:
+    commandLineOptions: [--trust-type-annotations, --trust-primitives, --show-package-warnings, --dump-info]
+- dart_to_js_script_rewriter
