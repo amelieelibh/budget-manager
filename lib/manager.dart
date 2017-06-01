@@ -50,8 +50,6 @@ class ManagerComponent implements OnInit{
     if(f != null && !f.isEmpty){
       globals.user.idEmp = f[0].idResponsable;
       newFolio.idResponsable = globals.user.idEmp;
-      //globals.user.name = f[0].nombreResponsable;
-      //window.alert(""+newFolio.idResponsable);
     }
     folios.addAll(f);
   }

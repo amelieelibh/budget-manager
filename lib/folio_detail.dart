@@ -2,7 +2,6 @@ import 'dart:html';
 import 'dart:async';
 import 'package:angular2/core.dart';
 import 'package:angular2/router.dart';
-import 'dart:html';
 import 'package:angular_components/angular_components.dart';
 import 'package:angular2/angular2.dart';
 
@@ -18,10 +17,20 @@ import 'package:observable/observable.dart';
   selector: "manager-view",
   templateUrl: '../web/folio-detail.html',
   providers: const[
-    BillsService
+    BillsService,
+    popupBindings,
   ],
   directives: const[
-    materialDirectives  
+    NgModel,
+    CORE_DIRECTIVES,
+    GlyphComponent,
+    MaterialButtonComponent,
+    MaterialFabComponent,
+    MaterialInputComponent,
+    MaterialInputDefaultValueAccessor,
+    AutoFocusDirective,
+    MaterialDialogComponent,
+    ModalComponent,  
   ],
 )
 class FolioDetailComponent implements OnInit{
@@ -36,6 +45,10 @@ class FolioDetailComponent implements OnInit{
   ObservableList<Bill> bills = toObservable(new List());
   User user = new User();
   var i = 0;
+  bool showNewBillForm = false;
+  bool showSavePopup = false;
+  bool showSavedPopup = false;
+  Bill newBill = new Bill();
 
   void updateTableView(String i, bool isEditable){
     var editable = isEditable ? "true" : "false";
@@ -107,124 +120,6 @@ class FolioDetailComponent implements OnInit{
     user = globals.user;
     var b = await _billsService.getBills(folio.folio);
     bills.addAll(b);
-
-    if(true)return;
-
-    TableElement table = new TableElement();
-    table.classes..add("pure-table")..add("pure-table-horizontal");
-
-    table.createTHead().insertRow(-1).nodes
-      ..add(new Element.th()..text = "")
-      ..add(new Element.th()..text = "#")
-      ..add(new Element.th()..text = "Cta Contable")
-      ..add(new Element.th()..text = "Monto")
-      ..add(new Element.th()..text = "RFC proveedor")
-      ..add(new Element.th()..text = "CFDI")
-      ..add(new Element.th()..text = "Descripción")
-      //..nodes.add(new Element.tag('th')..text = "Id del Empleado")
-      //..nodes.add(new Element.tag('th')..text = "Nombre del Empleado")
-      ..add(new Element.th()..text = "Detalle")
-      ;
-    
-    
-    var isEditable = "false";
-    var tBody = table.createTBody();
-    int i = 0;
-    for(var b in bills){
-      i++;
-      var newLine = tBody.addRow()..id = "row"+i.toString();
-
-      DivElement index = new DivElement()..setAttribute(BudgetConstants.EDITABLE_ATTR, isEditable)..text = i.toString();
-      DivElement acc = new DivElement()..setAttribute(BudgetConstants.EDITABLE_ATTR, isEditable)
-        ..setAttribute("id",BudgetConstants.divAcc+i.toString())..text = b.contableAccount;
-      DivElement mount = new DivElement()..setAttribute(BudgetConstants.EDITABLE_ATTR, isEditable)
-        ..setAttribute("id",BudgetConstants.divMount+i.toString())..text = b.mount.toStringAsFixed(2);
-      DivElement rfc = new DivElement()..setAttribute(BudgetConstants.EDITABLE_ATTR, isEditable)
-        ..setAttribute("id",BudgetConstants.divRfc+i.toString())..text = b.rfc;
-      
-      DivElement cfdi = new DivElement()..setAttribute(BudgetConstants.EDITABLE_ATTR, isEditable)
-        ..setAttribute("id",BudgetConstants.divCfdi+i.toString());
-      DivElement desc = new DivElement()..setAttribute(BudgetConstants.EDITABLE_ATTR, isEditable)
-        ..setAttribute("id",BudgetConstants.divDesc+i.toString())..text = b.desc;
-      //DivElement empId = new DivElement()..setAttribute(BudgetConstants.EDITABLE_ATTR, isEditable)
-        //..setAttribute("id",BudgetConstants.divEid+i.toString())..text = b.employeeId;
-      //DivElement empName = new DivElement()..setAttribute(BudgetConstants.EDITABLE_ATTR, isEditable)
-        //..setAttribute("id",BudgetConstants.divEname+i.toString())..text = b.empName;
-      
-      var butEdit = new SpanElement()..classes.addAll(["glyphicon","glyphicon-pencil"])
-        ..setAttribute("id", BudgetConstants.butEdit+i.toString())
-        ..setAttribute("name", i.toString())
-        ..style.visibility=""
-        ..onClick.listen((MouseEvent event) => onEditRow(event));
-      var butOkEdit = new SpanElement()..classes.addAll(["glyphicon","glyphicon-ok"])
-        ..setAttribute("id", BudgetConstants.butEditOk+i.toString())
-        ..setAttribute("name", i.toString())..style.visibility="hidden"
-        ..onClick.listen((MouseEvent event) => onEditOkRow(event));
-      var butDetail = new SpanElement()..classes.addAll(["glyphicon","glyphicon-zoom-in"])
-        ..setAttribute("id", BudgetConstants.butDetail+i.toString())
-        ..setAttribute("name", i.toString())
-        ..setAttribute("data-toggle", "collapse")
-        ..setAttribute("data-target", "#details"+i.toString())
-        ..onClick.listen((MouseEvent event) => onShowDetail(event));
-      
-      //var butUploadCfdi = 
-      /*new LabelElement()
-        ..htmlFor = "upload"+i.toString()
-        ..children.addAll([
-          new SpanElement()..classes.addAll(["glyphicon","glyphicon-upload"])
-            ..setAttribute("id", BudgetConstants.butUploadCfdi+i.toString())
-            ..setAttribute("name", i.toString())
-            ..onClick.listen((MouseEvent event) => uploadCfdi(event))
-          , new InputElement()..type = "file"
-            ..id = "upload" + i.toString()
-            ..name = "files[]" ..style.display = "none"
-            ..onChange.listen((event)=> uploadFiles(event))
-        ]);*/
-      var butDownloadCfdi = new AnchorElement()..href = b.cfdi
-        ..children.add(
-          new SpanElement()..classes.addAll(["glyphicon","glyphicon-download-alt"])
-            ..setAttribute("id", BudgetConstants.butDownloadCfdi+i.toString())
-            ..setAttribute("name", i.toString())..style.visibility=(b.cfdi != null && !b.cfdi.isEmpty ? "" : "hidden")
-        )..target = "_blank";
-      cfdi.children.addAll([/*butUploadCfdi.inputEl.nativeElement,*/ butDownloadCfdi]);
-      
-
-      newLine
-      ..addCell().children.addAll([butEdit, butOkEdit])
-      ..addCell().children.add(index)
-      ..addCell().children.add(acc)
-      ..addCell().children.add(mount)
-      ..addCell().children.add(rfc)
-      ..addCell().children.add(cfdi)
-      ..addCell().children.add(desc)
-      //newLine.addCell().children.add(empId);
-      //newLine.addCell().children.add(empName);
-      ..addCell().children.add(butDetail)
-      ;
-      butDetail.parent.style.textAlign="center";
-
-      var newDetails = tBody.addRow()
-        ..id = "details"+i.toString()
-        ..classes.add("collapse");
-      
-
-      Element detailsElem = new Element.ul();
-      for(String key in b.employees.keys){
-        Element rowDet = new Element.li();
-        rowDet.appendHtml('<span class="badge">' + key + '</span> <span> ' + b.employees[key] + ' </span>');
-        detailsElem.children.add(rowDet);
-      }
-
-      var cellDetails = newDetails.addCell();
-      cellDetails
-        ..children.add(detailsElem)
-        ..colSpan=7
-      ;
-      
-    }
-
-    Element dvBudget = querySelector('#budget');
-    dvBudget.children.add(table);
   }
 
   Future goBack() { 
@@ -280,60 +175,7 @@ class FolioDetailComponent implements OnInit{
   }
   Future createBill(){
     String htmlContent = """
-      <form id="new-bill-form" action="#" class="form-horizontal">
-        <div class="form-group">
-          <label class="control-label" for="inCta">Cuenta Contable:</label>
-          <input id="inCta" type="text" class="form-control" required
-              placeholder="Cuenta Contable del Gasto" />
-        </div>
-        <div class="form-group">
-          <label class="control-label" for="inMount">Monto:</label>
-          <input id="inMount" type="number" class="form-control" required
-              placeholder="Cantidad del Gasto" step="0.01" />
-        </div>
-        <div class="form-group">
-          <label class="control-label" for="inRfc">RFC:</label>
-          <input id="inRfc" type="text" class="form-control" required
-              placeholder="RFC del Proveedor" />
-        </div>
-        <div class="form-group">
-          <label class="control-label" for="inDesc">Descripción:</label>
-          <input id="inDesc" type="text" class="form-control" required
-              placeholder="Detalle del Gasto" />
-        </div>
-          <hr>
-        <div style="margin: 5%;">
-          <input type="checkbox" name="requireEmpList" value="reqEmpList"
-             data-toggle="collapse" data-target="#listaEmpleados"> designar gastos a empleados<br>
-          <div id="listaEmpleados" class="collapse">
-            <table id="tblForEmployees">
-              <thead>
-                <tr>
-                  <th>ID del Empleado</th>
-                  <th>Nombre</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th contenteditable>-</th>
-                  <th contenteditable>-</th>
-                </tr>
-              </tbody>
-            </table>
-            <script>
-              function addEmployeeRow(){
-                var table = document.getElementById("tblForEmployees");
-                var row = table.insertRow(-1);
-                var cell1 = row.insertCell(0);
-                var cell2 = row.insertCell(1);
-                cell1.innerHTML = "-";
-                cell2.innerHTML = "-";
-              }
-            </script>
-            <button class="btn btn-warning btn-block pull-right" onclick="addEmployeeRow()">Agregar Empleado</button>
-          </div>
-        </div>
-      </form>
+      
       """;
     new ModalConfirm("Agregar Nuevo Gasto", htmlContent,
       html: true, acceptLabel: "Agregar", cancelLabel: "Cancelar", accept: (ModalDialog modal){
@@ -348,8 +190,15 @@ class FolioDetailComponent implements OnInit{
       ..modal.element.classes.add("budget-modal");
       querySelector(".modal-dialog").style.margin = "auto";
   }
-
-  void addRowBill(TableSectionElement tBody, String i, bool editable, Bill b){
+  void addEmployeeRow(){
+    var table = querySelector("tblForEmployees") as TableElement;
+    /*var row = table.insertRow(-1);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    cell1.innerHTML = "-";
+    cell2.innerHTML = "-";*/
+  }
+  void addRowBill(bool confirm){
       if(tBody == null){
         tBody = querySelector("tbody") as TableSectionElement;
       }

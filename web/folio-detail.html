@@ -25,92 +25,88 @@
                     <tr *ngFor="let b of bills;let i = index">
                         <td colspan="7">-->
             <div *ngFor="let b of bills;let i = index">
-                            <table class="mdl-data-table mdl-js-data-table">
-                                <tbody>
-                                    <tr>
-                                        <td class="mdl-data-table__cell--non-numeric">
-                                            <div>
-                                                <material-fab mini raised (trigger)="onEditRow"
-                                                    [hidden]="false"
-                                                    id="{{butEdit}}{{i+1}}"
-                                                    name="{{i+1}}">
-                                                    <glyph icon="mode_edit"></glyph>
-                                                </material-fab>
-                                                <material-fab mini raised (trigger)="onEditOkRow"
-                                                    [hidden]="true"
-                                                    id="{{butEditOk}}{{i+1}}"
-                                                    name="{{i+1}}">
-                                                    <glyph icon="check_circle"></glyph>
-                                                </material-fab>
-                                            </div>
-                                        </td>
-                                        <td class="hash">
-                                            {{i+1}}
-                                        </td>
-                                        <td class="mdl-data-table__cell--non-numeric cta-contable">
-                                            <div id="{{divAcc}}{{i+1}}">
-                                                {{b.contableAccount}}
-                                            </div>
-                                        </td>
-                                        <td class="monto">
-                                            <div id="{{divMount}}{{i+1}}">
-                                                {{b.mount.toStringAsFixed(2)}}
-                                            </div>
-                                        </td>
-                                        <td class="mdl-data-table__cell--non-numeric rfc-proveedor">
-                                            <div id="{{divRfc}}{{i+1}}">
-                                                {{b.rfc}}
-                                            </div>
-                                        </td>
-                                        <td class="mdl-data-table__cell--non-numeric cfdi">
-                                            <div id="{{divCfdi}}{{i+1}}">
-                                                <!--<label [htmlFor]="'upload' + (i+1).toString()">-->
-                                                <label>
-                                                    <glyph icon="file_upload" id="{{butUploadCfdi}}{{i+1}}"
-                                                        (click)="uploadCfdi(i+1)"></glyph>
-                                                    <material-input type="file"
-                                                        id="upload{{i+1}}" [hidden]="true"
-                                                        name="files[]" (change)="uploadFiles(i)">
-                                                        </material-input>
-                                                </label>
-                                                <a href="{{b.cfdi}}" target="_blank"
-                                                    [hidden]="b.cfdi == null || b.cfdi.isEmpty">
-                                                    <glyph icon="file_download"></glyph>
-                                                </a>
-                                            </div>
-                                        </td>
-                                        <td class="mdl-data-table__cell--non-numeric descripcion">
-                                            <div id="{{divDesc}}{{i+1}}">
-                                                {{b.desc}}
-                                            </div>
-                                        </td>
-                                        <td class="mdl-data-table__cell--non-numeric detalle">
-                                            <div>
-                                                <material-fab mini raised (trigger)="onShowDetail"
-                                                    id="{{butDetail}}{{i+1}}"
-                                                    name="{{i+1}}"
-                                                    (trigger)="toggleCollapse(i+1)">
-                                                    <glyph icon="details"></glyph>
-                                                </material-fab>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="collapse" id="details{{i+1}}">
-                                        <td class="mdl-data-table__cell--non-numeric"
-                                                colSpan="7">
-                                            <ul>
-                                                <li *ngFor="let key of b.employees.keys">
-                                                    <span>{{key}} : {{b.employees[key]}}</span>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        <!--</td>
-                    </tr>
-                </tbody>
-            </table>-->
+                <table class="mdl-data-table mdl-js-data-table">
+                    <tbody>
+                        <tr>
+                            <td class="mdl-data-table__cell--non-numeric">
+                                <div>
+                                    <material-fab mini raised (trigger)="onEditRow"
+                                        [hidden]="false"
+                                        id="{{butEdit}}{{i+1}}"
+                                        name="{{i+1}}">
+                                        <glyph icon="mode_edit"></glyph>
+                                    </material-fab>
+                                    <material-fab mini raised (trigger)="onEditOkRow"
+                                        [hidden]="true"
+                                        id="{{butEditOk}}{{i+1}}"
+                                        name="{{i+1}}">
+                                        <glyph icon="check_circle"></glyph>
+                                    </material-fab>
+                                </div>
+                            </td>
+                            <td class="hash">
+                                {{i+1}}
+                            </td>
+                            <td class="mdl-data-table__cell--non-numeric cta-contable">
+                                <div id="{{divAcc}}{{i+1}}">
+                                    {{b.contableAccount}}
+                                </div>
+                            </td>
+                            <td class="monto">
+                                <div id="{{divMount}}{{i+1}}">
+                                    {{b.mount.toStringAsFixed(2)}}
+                                </div>
+                            </td>
+                            <td class="mdl-data-table__cell--non-numeric rfc-proveedor">
+                                <div id="{{divRfc}}{{i+1}}">
+                                    {{b.rfc}}
+                                </div>
+                            </td>
+                            <td class="mdl-data-table__cell--non-numeric cfdi">
+                                <div id="{{divCfdi}}{{i+1}}">
+                                    <!--<label [htmlFor]="'upload' + (i+1).toString()">-->
+                                    <label>
+                                        <glyph icon="file_upload" id="{{butUploadCfdi}}{{i+1}}"
+                                            (click)="uploadCfdi(i+1)"></glyph>
+                                        <material-input type="file"
+                                            id="upload{{i+1}}" [hidden]="true"
+                                            name="files[]" (change)="uploadFiles(i)">
+                                            </material-input>
+                                    </label>
+                                    <a href="{{b.cfdi}}" target="_blank"
+                                        [hidden]="b.cfdi == null || b.cfdi.isEmpty">
+                                        <glyph icon="file_download"></glyph>
+                                    </a>
+                                </div>
+                            </td>
+                            <td class="mdl-data-table__cell--non-numeric descripcion">
+                                <div id="{{divDesc}}{{i+1}}">
+                                    {{b.desc}}
+                                </div>
+                            </td>
+                            <td class="mdl-data-table__cell--non-numeric detalle">
+                                <div>
+                                    <material-fab mini raised (trigger)="onShowDetail"
+                                        id="{{butDetail}}{{i+1}}"
+                                        name="{{i+1}}"
+                                        (trigger)="toggleCollapse(i+1)">
+                                        <glyph icon="details"></glyph>
+                                    </material-fab>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="collapse" id="details{{i+1}}">
+                            <td class="mdl-data-table__cell--non-numeric"
+                                    colSpan="7">
+                                <ul>
+                                    <li *ngFor="let key of b.employees.keys">
+                                        <span>{{key}} : {{b.employees[key]}}</span>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -120,3 +116,71 @@
     <button class="btn btn-info pull-right but-distance" style="color:black" (click)="createBill()">Agregar Gasto</button>
     <button class="btn btn-success but-distance" (click)="goBack()">Hecho</button>
 </div>
+
+<modal [visible]="showNewBillForm">
+    <material-dialog class="headered-dialog max-height-dialog">
+        <div header>
+            <h3>Registro de Folio</h3>
+            <p>Ingresa los datos del folio con los datos del sistema origen.</p>
+        </div>
+
+        <form id="new-bill-form" action="#" class="form-horizontal">
+            <div class="form-group">
+                <label class="control-label" for="inCta">Cuenta Contable:</label>
+                <input id="inCta" type="text" class="form-control" required
+                    placeholder="Cuenta Contable del Gasto" />
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="inMount">Monto:</label>
+                <input id="inMount" type="number" class="form-control" required
+                    placeholder="Cantidad del Gasto" step="0.01" />
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="inRfc">RFC:</label>
+                <input id="inRfc" type="text" class="form-control" required
+                    placeholder="RFC del Proveedor" />
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="inDesc">Descripción:</label>
+                <input id="inDesc" type="text" class="form-control" required
+                    placeholder="Detalle del Gasto" />
+            </div>
+            <hr>
+            <div style="margin: 5%;">
+                <input type="checkbox" name="requireEmpList" value="reqEmpList"
+                        data-toggle="collapse" data-target="#listaEmpleados"> designar gastos a empleados<br>
+                <div id="listaEmpleados" class="collapse">
+                    <table id="tblForEmployees">
+                        <thead>
+                            <tr>
+                                <th>ID del Empleado</th>
+                                <th>Nombre</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td contenteditable>-</td>
+                                <td contenteditable>-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button class="btn btn-warning btn-block pull-right"
+                            (trigger)="addEmployeeRow()">Agregar Empleado</button>
+                </div>
+            </div>
+        </form>
+
+        <div footer>
+            <material-button (trigger)="addRowBill(false)"
+                       class="btn btn-secondary">
+                Cancelar
+            </material-button>
+            <material-button
+                       (trigger)="addRowBill(true)"
+                       [disabled]="!newBill.isFillled()"
+                       class="btn btn-primary pull-right">
+                Agregar
+            </material-button>
+        </div>
+    </material-dialog>
+</modal>
