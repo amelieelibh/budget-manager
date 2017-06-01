@@ -11,7 +11,7 @@ environment:
 dependencies:
   angular2: '>=3.0.0 <4.0.0'
   modal_dialog: "^2.0.0"
-  angular_components: "^0.5.0"
+  angular_components: "^0.5.2"
   
   ng_bootstrap: '^0.6.3'
   
@@ -21,8 +21,8 @@ dependencies:
   #js: ^0.6.1
   #uuid: ^0.5.3
   
-  uri: "^0.11.0"
-  rpc: "^0.5.6+3"
+  #uri: "^0.11.0"
+  #rpc: "^0.5.6+3"
   http_server: "^0.9.6"
   appengine: '>=0.4.0 <0.5.0'
   
@@ -33,7 +33,7 @@ dev_dependencies:
   dart_to_js_script_rewriter: "^1.0.2"
   
 dependency_overrides:
-  quiver: '>=0.17.0 <0.22.0'
+  #quiver: '>=0.17.0 <0.22.0'
   #uri: "^0.10.0"
   
 transformers:
