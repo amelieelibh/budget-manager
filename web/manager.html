@@ -13,9 +13,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let folio of folios" 
-                    [class.selected]="folio === selectedFolio"
-                    (click)="onSelect(folio)">
+            <tr *ngFor="let folio of folios" [class.selected]="folio === selectedFolio" (click)="onSelect(folio)">
                 <td class="mdl-data-table__cell--non-numeric check">{{folio.check}}</td>
                 <td class="mdl-data-table__cell--non-numeric folio">{{folio.folio}}</td>
                 <td class="mdl-data-table__cell--non-numeric cc">{{folio.cc}}</td>
@@ -26,14 +24,12 @@
         </tbody>
     </table>
     <br/>
-    <material-button (trigger)="showNewFolioForm = true"
-                 [disabled]="showNewFolioForm"
-                 raised
-                 class="btn btn-primary pull-right">
+    <material-button (trigger)="showNewFolioForm = true" [disabled]="showNewFolioForm" raised class="pull-right btn btn-primary">
         Asignar Folio
     </material-button>
     <button class="btn btn-inverse" (click)="goBack()">Back</button>
 </div>
+
 <modal [visible]="showNewFolioForm">
     <material-dialog class="headered-dialog max-height-dialog">
         <div header>
@@ -41,61 +37,61 @@
             <p>Ingresa los datos del folio con los datos del sistema origen.</p>
         </div>
 
-        <form id="new-folio-form" action="#" class="form-horizontal">
+        <form id="new-folio-form" action="#" method="post" class="form-horizontal">
             <div class="form-group">
-            <label class="control-label" for="inIdResp">Id Responsable:</label>
-            <input id="inIdResp" [(ngModel)]="newFolio.idResponsable"
-                type="text" class="form-control" required
-                placeholder="Id del Empleado Responsable"
-                [disabled] = "true" />
+                <label class="control-label" for="inIdResp">Id Responsable:</label>
+                <material-input id="inIdResp" [(ngModel)]="newFolio.idResponsable" 
+                    type="text" class="form-control" required 
+                    placeholder="Id del Empleado Responsable"
+                    [disabled]="true">
+                </material-input>
             </div>
             <div class="form-group">
-            <label class="control-label" for="inFolio">Folio:</label>
-            <input id="inFolio" [(ngModel)]="newFolio.folio"
-                type="text" class="form-control" required autofocus
-                placeholder="Folio del proyecto" />
+                <label class="control-label" for="inFolio">Folio:</label>
+                <material-input id="inFolio" [(ngModel)]="newFolio.folio" 
+                    type="text" class="form-control" required autofocus 
+                    errorMsg="Folio requerido"
+                    placeholder="Folio del proyecto">
+                </material-input>
             </div>
             <div class="form-group">
-            <label class="control-label" for="inCC">CC:</label>
-            <input id="inCC" [(ngModel)]="newFolio.cc"
-                type="text" class="form-control" required
-                placeholder="Id del centro de Costos" />
-            <br/>
+                <label class="control-label" for="inCC">CC:</label>
+                <material-input id="inCC" [(ngModel)]="newFolio.cc" type="text" class="form-control" required errorMsg="Id del Centro de Costos requerido"
+                    placeholder="Id del centro de Costos">
+                </material-input>
+                <br/>
             </div>
             <div class="form-group">
-            <label class="control-label" for="inCentroCostos">Centro de Costos:</label>
-            <input id="inCentroCostos" [(ngModel)]="newFolio.centroCostos"
-                type="text" class="form-control" required
-                placeholder="Centro de Costos" />
-            <br/>
+                <label class="control-label" for="inCentroCostos">Centro de Costos:</label>
+                <material-input id="inCentroCostos" [(ngModel)]="newFolio.centroCostos" type="text" class="form-control" required errorMsg="Nombre del Centro de Costos requerido"
+                    placeholder="Centro de Costos" >
+                </material-input>
+                <br/>
             </div>
             <div class="form-group">
-            <label class="control-label" for="inDescripcion">Descrici&oacute;n:</label>
-            <input id="inDescripcion" [(ngModel)]="newFolio.descripcion"
-                type="text" class="form-control" required
-                placeholder="Descripción corta del proyecto" />
-            <br/>
+                <label class="control-label" for="inDescripcion">Descrici&oacute;n:</label>
+                <material-input id="inDescripcion" [(ngModel)]="newFolio.descripcion" type="text" class="form-control" placeholder="Descripción corta del proyecto" >
+                </material-input>
+                <br/>
             </div>
             <div class="form-group">
-            <label class="control-label" for="inMonto">Monto:</label>
-            <input id="inMonto" [(ngModel)]="newFolio.monto"
-                type="number" step="0.01" class="form-control" required
-                placeholder="Descripción corta del proyecto" />
-            <br/>
+                <label class="control-label" for="inMonto">Monto:</label>
+                <input id="inMonto" [(ngModel)]="newFolio.monto" type="number" step="0.01" class="form-control" required errorMsg="Monto del presupuesto requerido"
+                    placeholder="Descripción corta del proyecto" />
+                <br/>
+            </div>
+
+
+            <div footer>
+                <material-button (trigger)="addFolio(false)" class="btn btn-secondary">
+                    Cancelar
+                </material-button>
+                <material-button (trigger)="addFolio(true)" 
+                        [disabled]="!newFolio.isFilled()"
+                        class="btn btn-primary pull-right">
+                    Agregar
+                </material-button>
             </div>
         </form>
-
-        <div footer>
-            <material-button (trigger)="addFolio(false)"
-                       class="btn btn-secondary">
-                Cancelar
-            </material-button>
-            <material-button
-                       (trigger)="addFolio(true)"
-                       [disabled]="!newFolio.isFillled()"
-                       class="btn btn-primary pull-right">
-                Agregar
-            </material-button>
-        </div>
     </material-dialog>
 </modal>

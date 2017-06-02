@@ -54,6 +54,20 @@
 .badge-inverse[href] {
   background-color: #1a1a1a;
 }
+.btn-primary:hover {
+    color: #fff !important;
+    background-color: #025aa5 !important;
+    border-color: #01549b !important;
+}
+.btn-primary {
+    color: #fff !important;
+    background-color: #0275d8 !important;
+    border-color: #0275d8 !important;
+}
+
+.form-control {
+    padding: 0.1rem 0.5rem !important;
+}
 
 /* everywhere else */
 * {
@@ -195,6 +209,9 @@ hr{
 label{
 	margin-bottom: 15px;
 }
+.control-label label{
+  margin-bottom: 0px;
+}
 
 input,
 input::-webkit-input-placeholder {
@@ -279,26 +296,6 @@ only screen and (max-width: 760px) and (orientation: portrait),
     width: 100%;
     max-width: 100%;
   }
-
-  * {
-      font-size: 14px;
-  }
-  
-  h1 {
-      font-size: 24px;
-  }
-
-  h2 {
-      font-size: 22px;
-  }
-
-  h3 {
-      font-size: 18px;
-  }
-
-  blockquote {
-      font-size: 12px !important;
-  }
   
 	/* Force table to not be like tables anymore */
 	table,
@@ -366,3 +363,29 @@ only screen and (max-width: 760px) and (orientation: portrait),
   td.descripcion:nth-of-type(7):before  { content: "Descripción"; }
   td.detalle:nth-of-type(8):before { content: "Detalle"; }
 }
+
+
+
+  * {
+      font-size: 3vmin !important;
+  }
+  
+  h1 {
+      font-size: 9vmin !important;
+  }
+
+  h2 {
+      font-size: 6vmin !important;
+  }
+
+  h3 {
+      font-size: 4vmin !important;
+  }
+
+  blockquote {
+      font-size: 3vmin !important;
+  }
+
+  i {
+    font-size: 5vmin !important;
+  }

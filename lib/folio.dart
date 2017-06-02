@@ -19,7 +19,7 @@ class Folio{
     this.check = check;
   }
 
-  bool isFillled(){
+  bool isFilled(){
     return !folio.isEmpty && !idResponsable.isEmpty
         && !cc.isEmpty && monto > 0.0;
   }
