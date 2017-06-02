@@ -49,7 +49,7 @@ Future requestHandler(HttpRequest request) async {
           exception, stack);
       */
     }
-    return sendApiResponse(apiResponse, request.response);
+    return sendApiResponse(null/*apiResponse*/, request.response);
   } else if (request.uri.path == '/') {
     // Redirect to the piratebadge.html file. This will initiate
     // loading the client application.
