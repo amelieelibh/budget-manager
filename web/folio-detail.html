@@ -112,8 +112,8 @@
     </div>
     <br>
     
-    <button class="btn btn-primary pull-right but-distance" (click)="saveChanges()">Guardar</button>
-    <button class="btn btn-info pull-right but-distance" style="color:black" (click)="createBill()">Agregar Gasto</button>
+    <button class="btn btn-primary pull-right but-distance" (click)="showSaveDialog = true">Guardar</button>
+    <button class="btn btn-info pull-right but-distance" style="color:black" (click)="showNewBillForm = true">Agregar Gasto</button>
     <button class="btn btn-success but-distance" (click)="goBack()">Hecho</button>
 </div>
 
@@ -159,8 +159,8 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td contenteditable>-</td>
-                                <td contenteditable>-</td>
+                                <td contenteditable> - - - </td>
+                                <td contenteditable> - - - </td>
                             </tr>
                         </tbody>
                     </table>
@@ -177,10 +177,82 @@
             </material-button>
             <material-button
                        (trigger)="addRowBill(true)"
-                       [disabled]="!newBill.isFillled()"
+                       [disabled]="!newBill.isFilled()"
                        class="btn btn-primary pull-right">
                 Agregar
             </material-button>
         </div>
     </material-dialog>
+</modal>
+
+<modal [visible]="showSaveDialog">
+  <material-dialog class="basic-dialog">
+    <h3 header>Desea guardar la información?</h3>
+    <p>
+      La información será sobreescrita y los cambios no podran revertirse.
+      Si desea cancelar y revisar la información, de click en Cancelar.
+    </p>
+    <div footer>
+
+      <material-button autoFocus
+                       clear-size
+                       (trigger)="showSaveDialog = false"
+                       class="white btn btn-secondary">
+        Cancelar
+      </material-button>
+      <material-button autoFocus
+                       clear-size
+                       (trigger)="saveChanges()"
+                       class="white btn btn-primary">
+        Guardar
+      </material-button>
+    </div>
+  </material-dialog>
+</modal>
+
+<modal [(visible)]="showSavedDialog">
+  <material-dialog
+      info
+      class="info-dialog"
+      [autoDismissable]="showSavedDialog"
+      (dismiss)="showSavedDialog = false">
+    <div header>
+      <material-button icon autoFocus (trigger)="showSavedDialog = false">
+        <glyph icon="close"></glyph>
+      </material-button>
+      <h3>Se ha guardado la información con éxito</h3>
+    </div>
+  </material-dialog>
+</modal>
+<modal [(visible)]="showNotSavedDialog">
+  <material-dialog
+      info
+      class="info-dialog"
+      [autoDismissable]="showNotSavedDialog"
+      (dismiss)="showNotSavedDialog = false">
+    <div header>
+      <material-button icon autoFocus (trigger)="showNotSavedDialog = false">
+        <glyph icon="close"></glyph>
+      </material-button>
+      <h3>Error al guardar la información</h3>
+      <p>
+          No se pudo escribir la información. Error:###. Por favor revise la información.
+      </p>
+    </div>
+  </material-dialog>
+</modal>
+
+<modal [(visible)]="showFilesUploadedDialog">
+  <material-dialog
+      info
+      class="info-dialog"
+      [autoDismissable]="showFilesUploadedDialog"
+      (dismiss)="showFilesUploadedDialog = false">
+    <div header>
+      <material-button icon autoFocus (trigger)="showFilesUploadedDialog = false">
+        <glyph icon="close"></glyph>
+      </material-button>
+      <h3>Archivos Cargados</h3>
+    </div>
+  </material-dialog>
 </modal>
