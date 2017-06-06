@@ -27,19 +27,17 @@
             <div *ngFor="let b of bills;let i = index">
                 <table class="mdl-data-table mdl-js-data-table">
                     <tbody>
-                        <tr>
+                        <tr id="row{{i+1}}">
                             <td class="mdl-data-table__cell--non-numeric">
                                 <div>
-                                    <material-fab mini raised (trigger)="onEditRow"
+                                    <material-fab mini raised (trigger)="onEditRow(i)"
                                         [hidden]="false"
-                                        id="{{butEdit}}{{i+1}}"
-                                        name="{{i+1}}">
+                                        id="{{butEdit}}{{i+1}}">
                                         <glyph icon="mode_edit"></glyph>
                                     </material-fab>
-                                    <material-fab mini raised (trigger)="onEditOkRow"
+                                    <material-fab mini raised (trigger)="onEditOkRow(i)"
                                         [hidden]="true"
-                                        id="{{butEditOk}}{{i+1}}"
-                                        name="{{i+1}}">
+                                        id="{{butEditOk}}{{i+1}}">
                                         <glyph icon="check_circle"></glyph>
                                     </material-fab>
                                 </div>
@@ -68,10 +66,9 @@
                                     <label>
                                         <glyph icon="file_upload" id="{{butUploadCfdi}}{{i+1}}"
                                             (click)="uploadCfdi(i+1)"></glyph>
-                                        <material-input type="file"
+                                        <input type="file"
                                             id="upload{{i+1}}" [hidden]="true"
-                                            name="files[]" (change)="uploadFiles(i)">
-                                            </material-input>
+                                            name="files[]" (change)="uploadFiles(i+1)" />
                                     </label>
                                     <a href="{{b.cfdi}}" target="_blank"
                                         [hidden]="b.cfdi == null || b.cfdi.isEmpty">

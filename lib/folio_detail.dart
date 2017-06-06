@@ -67,10 +67,8 @@ class FolioDetailComponent implements OnInit {
     querySelector("#" + BudgetConstants.divRfc + i)
         .setAttribute(BudgetConstants.EDITABLE_ATTR, editable);
 
-    querySelector("#" + BudgetConstants.butEdit + i).style.visibility =
-        isEditable ? "hidden" : "";
-    querySelector("#" + BudgetConstants.butEditOk + i).style.visibility =
-        isEditable ? "" : "hidden";
+    querySelector("#" + BudgetConstants.butEdit + i).hidden = isEditable;
+    querySelector("#" + BudgetConstants.butEditOk + i).hidden = !isEditable;
     //querySelector("#"+BudgetConstants.butEditCancel+i).style.visibility="";
 
     if (isEditable)
@@ -87,18 +85,12 @@ class FolioDetailComponent implements OnInit {
       ..add(toggleClass);
   }
 
-  void onEditRow(MouseEvent event, var detail, var target) {
-    window.alert("event="+event.runtimeType.toString());
-    Element e = event.target;
-    var i = target.attributes["name"];//getAttribute("name");
-    window.alert("i="+i.toString());
-    updateTableView(i, true);
+  void onEditRow(var i) {
+    updateTableView((i+1).toString(), true);
   }
 
-  void onEditOkRow(MouseEvent event) {
-    Element e = event.target;
-    var i = e.getAttribute("name");
-    updateTableView(i, false);
+  void onEditOkRow(var i) {
+    updateTableView((i+1).toString(), false);
   }
 
   void onShowDetail(MouseEvent event) {
