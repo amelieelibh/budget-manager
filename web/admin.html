@@ -1,6 +1,6 @@
 <div id="container">
 	<div class="main-login main-center">
-		<h2>Administrador del sistema. {{globals.user.id}}</h2>
+		<h2>Administrador del sistema.</h2>
 		<br/>
 		<h3>Usuarios en el sistema.</h3>
 		<table>
@@ -12,11 +12,6 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr *ngFor="let u of globals.users">
-					<td>{{u.idEmp}}</td>
-					<td>{{u.id}}</td>
-					<td>{{u.name}}</td>
-				</tr>
 			</tbody>
 		</table>
 		<br/>
