@@ -9,9 +9,9 @@ class Bill {
   static const _defaultMap = const {"id": "name"};
 
   Bill(
-      {String contableAccount = "",
-      num mount = 0.0,
-      String rfc = "",
+      {String contableAccount : "",
+      num mount : 0.0,
+      String rfc : "",
       String desc: "",
       String cfdi: "",
       Map<String, String> employees: const {"id": "name"}}) {
