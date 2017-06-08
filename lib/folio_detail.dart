@@ -31,6 +31,7 @@ import 'package:observable/observable.dart';
     AutoFocusDirective,
     MaterialDialogComponent,
     ModalComponent,
+    MaterialToggleComponent,
   ],
 )
 class FolioDetailComponent implements OnInit {
@@ -51,6 +52,12 @@ class FolioDetailComponent implements OnInit {
   bool showNotSavedDialog = false;
   bool showFilesUploadedDialog = false;
   Bill newBill = new Bill();
+  bool showEmps = false;
+
+  void showNewBillFormView(){
+    showNewBillForm = true;
+    (querySelector('#inMount input') as InputElement).type = 'number';
+  }
 
   void updateTableView(String i, bool isEditable) {
     var editable = isEditable.toString();;// ? "true" : "false";
@@ -158,18 +165,26 @@ class FolioDetailComponent implements OnInit {
   }
 
   void addEmployeeRow() {
-    var table = querySelector("tblForEmployees") as TableElement;
-    var row = table.insertRow(-1);
+    var table = querySelector("#tblForEmployees") as TableElement;
+    var row = table.addRow();
     var cell1 = row.insertCell(0);
     var cell2 = row.insertCell(1);
-    cell1.innerHtml = " - - - ";
-    cell2.innerHtml = " - - - ";
+    cell1
+      ..style.backgroundColor = "slategrey"
+      ..contentEditable = "true"
+      ..innerHtml = " ";
+    cell2
+      ..style.backgroundColor = "slategrey"
+      ..contentEditable = "true"
+      ..innerHtml = " ";
   }
 
   void addRowBill(bool confirm) {
+    showNewBillForm = false;
     if(confirm){
       bills.add(newBill);
     }
     newBill = new Bill();
   }
+
 }

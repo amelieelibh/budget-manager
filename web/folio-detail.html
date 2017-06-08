@@ -52,7 +52,7 @@
                             </td>
                             <td class="monto">
                                 <div id="{{divMount}}{{i+1}}">
-                                    {{b.mount.toStringAsFixed(2)}}
+                                    {{b.mount}}
                                 </div>
                             </td>
                             <td class="mdl-data-table__cell--non-numeric rfc-proveedor">
@@ -108,10 +108,23 @@
         </div>
     </div>
     <br>
-    
+    <!--
     <button class="btn btn-primary pull-right but-distance" (click)="showSaveDialog = true">Guardar</button>
     <button class="btn btn-info pull-right but-distance" style="color:black" (click)="showNewBillForm = true">Agregar Gasto</button>
     <button class="btn btn-success but-distance" (click)="goBack()">Hecho</button>
+    -->
+    <material-fab (trigger)="showSaveDialog = true"
+            class="pull-right but-distance" raised >
+        <glyph icon="save"></glyph>
+    </material-fab>
+    <material-fab (trigger)="showNewBillFormView()"
+            class="pull-right but-distance" raised >
+        <glyph icon="note_add"></glyph>
+    </material-fab>
+    <material-fab (trigger)="goBack()" 
+            class="but-distance" >
+        <glyph icon="arrow_back"></glyph>
+    </material-fab>
 </div>
 
 <modal [visible]="showNewBillForm">
@@ -124,29 +137,43 @@
         <form id="new-bill-form" action="#" class="form-horizontal">
             <div class="form-group">
                 <label class="control-label" for="inCta">Cuenta Contable:</label>
-                <input id="inCta" type="text" class="form-control" required
-                    placeholder="Cuenta Contable del Gasto" />
+                <material-input id="inCta" [(ngModel)]="newBill.contableAccount" 
+                    type="text" class="form-control" required 
+                    placeholder="Cuenta Contable"
+                    [disabled]="false">
+                </material-input>
             </div>
             <div class="form-group">
                 <label class="control-label" for="inMount">Monto:</label>
-                <input id="inMount" type="number" class="form-control" required
-                    placeholder="Cantidad del Gasto" step="0.01" />
+                <material-input id="inMount" [(ngModel)]="newBill.mount" 
+                    type="number" class="form-control" required 
+                    placeholder="Cuenta Contable" leadingGlyph="attach_money"
+                    [disabled]="false" errorMsg="Se necesita un número válido">
+                </material-input>
             </div>
             <div class="form-group">
                 <label class="control-label" for="inRfc">RFC:</label>
-                <input id="inRfc" type="text" class="form-control" required
-                    placeholder="RFC del Proveedor" />
+                <material-input id="inRfc" [(ngModel)]="newBill.rfc" 
+                    type="text" class="form-control" required 
+                    placeholder="RFC"
+                    [disabled]="false">
+                </material-input>
             </div>
             <div class="form-group">
                 <label class="control-label" for="inDesc">Descripción:</label>
-                <input id="inDesc" type="text" class="form-control" required
-                    placeholder="Detalle del Gasto" />
+                <material-input id="inDesc" [(ngModel)]="newBill.desc" 
+                    type="text" class="form-control" required 
+                    placeholder="Descripción del Gasto"
+                    [disabled]="false">
+                </material-input>
             </div>
             <hr>
             <div style="margin: 5%;">
-                <input type="checkbox" name="requireEmpList" value="reqEmpList"
-                        data-toggle="collapse" data-target="#listaEmpleados"> designar gastos a empleados<br>
-                <div id="listaEmpleados" class="collapse">
+                <material-toggle class="controls__faster_button"
+                        label="designar gastos a empleados"
+                        [(checked)]="showEmps" >
+                </material-toggle>
+                <div id="listaEmpleados" [hidden]="!showEmps">
                     <table id="tblForEmployees">
                         <thead>
                             <tr>
@@ -156,13 +183,17 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td contenteditable> - - - </td>
-                                <td contenteditable> - - - </td>
+                                <td style="background-color: slategrey" contenteditable> </td>
+                                <td style="background-color: slategrey" contenteditable> </td>
                             </tr>
                         </tbody>
                     </table>
-                    <button class="btn btn-warning btn-block pull-right"
-                            (trigger)="addEmployeeRow()">Agregar Empleado</button>
+                    <!--<button class="btn btn-warning btn-block pull-right"
+                            (trigger)="addEmployeeRow()">Agregar Empleado</button>-->
+                    <material-fab (trigger)="addEmployeeRow()" raised
+                            class="pull-right">
+                        <glyph icon="person_add"></glyph>
+                    </material-fab>
                 </div>
             </div>
         </form>
@@ -191,16 +222,14 @@
     </p>
     <div footer>
 
-      <material-button autoFocus
-                       clear-size
-                       (trigger)="showSaveDialog = false"
-                       class="white btn btn-secondary">
+    <material-button autoFocus clear-size
+        (trigger)="showSaveDialog = false"
+        class="white btn btn-secondary">
         Cancelar
-      </material-button>
-      <material-button autoFocus
-                       clear-size
-                       (trigger)="saveChanges()"
-                       class="white btn btn-primary">
+    </material-button>
+    <material-button autoFocus clear-size
+        (trigger)="saveChanges()"
+        class="white btn btn-primary">
         Guardar
       </material-button>
     </div>

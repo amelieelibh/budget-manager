@@ -1,6 +1,6 @@
 class Bill {
   String contableAccount;
-  num mount;
+  String mount;
   String rfc;
   String desc;
   String cfdi;
@@ -10,7 +10,7 @@ class Bill {
 
   Bill(
       {String contableAccount : "",
-      num mount : 0.0,
+      String mount : "",
       String rfc : "",
       String desc: "",
       String cfdi: "",
@@ -32,6 +32,8 @@ class Bill {
   }
 
   bool isFilled(){
-    return !this.contableAccount.isEmpty && this.mount > 0.0 && !this.rfc.isEmpty;
+    return !this.contableAccount.isEmpty && !this.mount.isEmpty && !this.rfc.isEmpty;
   }
+
+  num get mountValue => num.parse(mount);
 }
