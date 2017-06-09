@@ -77,9 +77,9 @@
 /*
     CUSTOM
 */
-
-.selected {
-  background-color: #039be5;
+div[contenteditable]{
+  background-color: #F6FCB4 !important;
+  border: 1vmin solid slateblue !important;
 }
 .but-distance{
   margin-left: 10px;

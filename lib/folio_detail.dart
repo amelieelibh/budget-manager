@@ -78,11 +78,11 @@ class FolioDetailComponent implements OnInit {
     querySelector("#" + BudgetConstants.butEditOk + i).hidden = !isEditable;
     //querySelector("#"+BudgetConstants.butEditCancel+i).style.visibility="";
 
-    if (isEditable)
+    /*if (isEditable)
       querySelector("#row" + i).classes.add("selected");
     else
       querySelector("#row" + i).classes.remove("selected");
-  }
+  }*/
 
   void showDetail(String i, bool show) {
     String toggleClass = show ? "glyphicon-zoom-out" : "glyphicon-zoom-in";
@@ -170,11 +170,9 @@ class FolioDetailComponent implements OnInit {
     var cell1 = row.insertCell(0);
     var cell2 = row.insertCell(1);
     cell1
-      ..style.backgroundColor = "slategrey"
       ..contentEditable = "true"
       ..innerHtml = " ";
     cell2
-      ..style.backgroundColor = "slategrey"
       ..contentEditable = "true"
       ..innerHtml = " ";
   }
