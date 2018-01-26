@@ -77,7 +77,8 @@
 /*
     CUSTOM
 */
-div[contenteditable]{
+div[contenteditable],
+div[contenteditable="true"]{
   background-color: #F6FCB4 !important;
   border: 1vmin solid slateblue !important;
 }

@@ -65,8 +65,8 @@ class FolioDetailComponent implements OnInit {
         .setAttribute(BudgetConstants.EDITABLE_ATTR, editable);
     querySelector("#" + BudgetConstants.divMount + i)
         .setAttribute(BudgetConstants.EDITABLE_ATTR, editable);
-    querySelector("#" + BudgetConstants.divCfdi + i)
-        .setAttribute(BudgetConstants.EDITABLE_ATTR, editable);
+    //querySelector("#" + BudgetConstants.divCfdi + i)
+    //    .setAttribute(BudgetConstants.EDITABLE_ATTR, editable);
     querySelector("#" + BudgetConstants.divDesc + i)
         .setAttribute(BudgetConstants.EDITABLE_ATTR, editable);
     //querySelector("#"+BudgetConstants.divEid+i).setAttribute(BudgetConstants.EDITABLE_ATTR, editable);
@@ -78,11 +78,12 @@ class FolioDetailComponent implements OnInit {
     querySelector("#" + BudgetConstants.butEditOk + i).hidden = !isEditable;
     //querySelector("#"+BudgetConstants.butEditCancel+i).style.visibility="";
 
-    /*if (isEditable)
+    /*if (isEditable)
       querySelector("#row" + i).classes.add("selected");
     else
       querySelector("#row" + i).classes.remove("selected");
-  }*/
+      */
+  }
 
   void showDetail(String i, bool show) {
     String toggleClass = show ? "glyphicon-zoom-out" : "glyphicon-zoom-in";
